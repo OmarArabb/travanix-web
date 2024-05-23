@@ -10,7 +10,10 @@ class CustomExpansionTile extends StatelessWidget {
   const CustomExpansionTile({
     super.key,
     required this.cubit,
-    required this.drawerItemModel, required this.title, required this.icon, required this.navigationShell,
+    required this.drawerItemModel,
+    required this.title,
+    required this.icon,
+    required this.navigationShell,
   });
 
   final String title;
@@ -23,15 +26,24 @@ class CustomExpansionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpansionTile(
       tilePadding: const EdgeInsets.only(left: 8),
-      title: Text(title,style: AppTextStyles.styleRegular12(),),
+      title: Text(
+        title,
+        style: AppTextStyles.styleRegular12(),
+      ),
       leading: Icon(icon),
       iconColor: basicColor,
       textColor: basicColor,
       collapsedIconColor: whiteColor,
       collapsedTextColor: whiteColor,
       children: [
-        DrawerItemList(displacementRange: 2,drawerItemModel: drawerItemModel,navigationShell: navigationShell,),
-        const SizedBox(height: 4,),
+        DrawerItemList(
+          displacementRange: 3,
+          drawerItemModel: drawerItemModel,
+          navigationShell: navigationShell,
+        ),
+        const SizedBox(
+          height: 4,
+        ),
       ],
     );
   }

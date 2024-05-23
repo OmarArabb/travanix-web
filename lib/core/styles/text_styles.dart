@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class AppTextStyles {
-  static TextStyle styleRegular16(context) {
+  static TextStyle styleRegular16() {
     return const TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w400,

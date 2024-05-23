@@ -14,7 +14,7 @@ class ErrorRoutingPage extends StatelessWidget {
       children: [
         SvgPicture.asset(Assets.images404),
         CustomMaterialButton(child: const Text('Go to home page'), onPressed: (){
-          context.pop();
+          context.go('/home');
         },),
       ],
     );

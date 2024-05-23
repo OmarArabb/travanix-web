@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travanix/core/styles/colors.dart';
+import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/data/models/drawer_item/drawer_item_model.dart';
 
 class SelectedDrawerItem extends StatelessWidget {
@@ -10,6 +11,7 @@ class SelectedDrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       decoration: const BoxDecoration(
         color: basicColor,
@@ -31,7 +33,7 @@ class SelectedDrawerItem extends StatelessWidget {
           ),
           Text(
             model.itemName,
-            style: const TextStyle(color: whiteColor),
+            style: AppTextStyles.styleRegular12().copyWith(color: whiteColor,),
           ),
           const Spacer(),
           const Icon(

@@ -25,12 +25,23 @@ class HomeLayout extends StatelessWidget {
             body: Row(
               children: [
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: CustomDrawer(cubit: cubit,navigationShell: navigationShell,),
                 ),
+                const SizedBox(
+                  width: 16,
+                ),
                 Expanded(
-                  flex: 11,
-                  child: navigationShell,
+                  flex: 15,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 16,),
+                      navigationShell,
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  width: 16,
                 ),
               ],
             ),

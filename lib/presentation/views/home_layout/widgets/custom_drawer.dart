@@ -5,11 +5,13 @@ import 'package:travanix/data/models/drawer_item/drawer_item_model.dart';
 import 'package:travanix/presentation/manger/home_layout_cubit/home_layout_cubit.dart';
 import 'package:travanix/presentation/views/home_layout/widgets/custom_expansion_tile.dart';
 import 'package:travanix/presentation/views/home_layout/widgets/drawer_item_list.dart';
+import 'package:travanix/presentation/views/home_layout/widgets/drawer_tail.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
     super.key,
-    required this.cubit, required this.navigationShell,
+    required this.cubit,
+    required this.navigationShell,
   });
 
   final HomeLayoutCubit cubit;
@@ -19,6 +21,7 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     List<DrawerItemModel> drawerItemModel = [
       DrawerItemModel(itemName: 'HOME', itemIcon: Icons.home),
+      DrawerItemModel(itemName: 'USERS', itemIcon: Icons.people),
       DrawerItemModel(itemName: 'NOTIFICATION', itemIcon: Icons.notifications),
       DrawerItemModel(itemName: 'PLAN', itemIcon: Icons.maps_home_work),
       DrawerItemModel(itemName: 'HOTEL', itemIcon: Icons.hotel),
@@ -27,26 +30,50 @@ class CustomDrawer extends StatelessWidget {
     ];
     return Container(
       color: navyBlueColor,
-      child: Column(
-        children: [
-          const Text('asd'),
-          DrawerItemList(
-            displacementRange: 0,
-            drawerItemModel: drawerItemModel.getRange(0, 2).toList(),
-            navigationShell: navigationShell,
+      child: CustomScrollView(
+        slivers: [
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 6,
+            ),
           ),
-          const SizedBox(
-            height: 4,
+          SliverToBoxAdapter(
+            child: DrawerItemList(
+              displacementRange: 0,
+              drawerItemModel: drawerItemModel.getRange(0, 3).toList(),
+              navigationShell: navigationShell,
+            ),
           ),
-          CustomExpansionTile(
-            cubit: cubit,
-            navigationShell: navigationShell,
-            drawerItemModel: drawerItemModel.getRange(2, 6).toList(),
-            title: 'ADD',
-            icon: Icons.add,
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 4,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: CustomExpansionTile(
+              cubit: cubit,
+              navigationShell: navigationShell,
+              drawerItemModel: drawerItemModel.getRange(3, 7).toList(),
+              title: 'ADD',
+              icon: Icons.add,
+            ),
+          ),
+          const SliverFillRemaining(
+            hasScrollBody: false,
+            child: Column(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 15,
+                  ),
+                ),
+                DrawerTail(),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 }
+

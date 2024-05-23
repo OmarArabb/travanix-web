@@ -2,9 +2,11 @@
 class Assets {
   Assets._();
 
-  static const String  extractionAmico = 'assets/images/Data extraction-amico.svg';
-  static const String  extractionPana = 'assets/images/Data extraction-pana.svg';
-  static const String  reportPana = 'assets/images/Data report-pana.svg';
+  static const String generatedAssets = 'lib/core/generated/assets.dart';
   static const String images404 = 'assets/images/404 error with person looking for-bro.svg';
+  static const String extractionAmico = 'assets/images/Data extraction-amico.svg';
+  static const String extractionPana = 'assets/images/Data extraction-pana.svg';
+  static const String reportPana = 'assets/images/Data report-pana.svg';
+  static const String imagesLogo = 'assets/images/logo.png';
 
 }

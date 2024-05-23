@@ -53,7 +53,7 @@ class _SecretTextFormFieldState extends State<SecretTextFormField> {
               : const Icon(Icons.visibility_off_sharp),
           onPressed: widget.onPressedSuffixIcon,
         ),
-        prefix: Icon(widget.prefixIcon),
+        prefix: Icon(widget.prefixIcon,),
         contentPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
         labelText: widget.text,
       ),
