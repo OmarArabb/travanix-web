@@ -33,15 +33,16 @@ class HomeLayout extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 15,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 16,),
-                      navigationShell,
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: navigationShell,
+                        ),
+                      )
                     ],
                   ),
-                ),
-                const SizedBox(
-                  width: 16,
                 ),
               ],
             ),

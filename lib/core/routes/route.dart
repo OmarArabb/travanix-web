@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travanix/core/routes/error_routing_page.dart';
-import 'package:travanix/presentation/views/create_hotel/create_hotel.dart';
+import 'package:travanix/presentation/views/create_items/create_hotel.dart';
 import 'package:travanix/presentation/views/home_layout/home_layout.dart';
 import 'package:travanix/presentation/views/login/login.dart';
 

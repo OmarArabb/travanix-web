@@ -13,9 +13,7 @@ class DrawerTail extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        const SizedBox(
-          width: 4,
-        ),
+        const Spacer(flex: 1,),
         Opacity(
           opacity: 0.75,
           child: Image.asset(
@@ -42,6 +40,7 @@ class DrawerTail extends StatelessWidget {
             ),
           ),
         ),
+        const Spacer(flex: 2,),
       ],
     );
   }

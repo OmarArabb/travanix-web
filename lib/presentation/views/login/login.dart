@@ -10,7 +10,7 @@ import 'package:travanix/core/widgets/custom_text_form_field.dart';
 import 'package:travanix/data/repos/login_repo.dart';
 import 'package:travanix/presentation/manger/login_cubit/cubit.dart';
 import 'package:travanix/presentation/manger/login_cubit/states.dart';
-import 'package:travanix/presentation/views/login/secret_text_form_field.dart';
+import 'package:travanix/presentation/views/login/widgets/secret_text_form_field.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -83,6 +83,7 @@ class LoginScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: CustomTextFormField(
+                          focusedBorder: buildOutlineInputBorder(),
                             prefixIcon: Icons.alternate_email,
                             controller: cubit.emailController,
                             text: 'Email',
@@ -94,6 +95,7 @@ class LoginScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: SecretTextFormField(
+                          focusedBorder: buildOutlineInputBorder(),
                           controller: cubit.passwordController,
                           prefixIcon: Icons.lock,
                           suffixIcon: Icons.remove_red_eye_rounded,
@@ -141,6 +143,14 @@ class LoginScreen extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+
+  OutlineInputBorder buildOutlineInputBorder() {
+    return const OutlineInputBorder(
+      borderSide: BorderSide(
+        color: basicColor,
       ),
     );
   }

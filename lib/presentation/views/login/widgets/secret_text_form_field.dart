@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travanix/core/styles/colors.dart';
 
 class SecretTextFormField extends StatefulWidget {
   const SecretTextFormField({
@@ -9,7 +10,7 @@ class SecretTextFormField extends StatefulWidget {
     this.prefixIcon,
     this.onPressedSuffixIcon,
     required this.text,
-    required this.controller,
+    required this.controller, this.focusedBorder,
   });
 
   final String? Function(String?)? validator;
@@ -18,6 +19,8 @@ class SecretTextFormField extends StatefulWidget {
   final IconData? suffixIcon;
   final IconData? prefixIcon;
   final void Function()? onPressedSuffixIcon;
+  final InputBorder? focusedBorder;
+
   final String text;
 
   @override
@@ -47,6 +50,10 @@ class _SecretTextFormFieldState extends State<SecretTextFormField> {
       obscureText: widget.obscureText.value,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
+        floatingLabelStyle: const TextStyle(color: basicColor),
+        fillColor: whiteColor,
+        filled: true,
+        focusedBorder: widget.focusedBorder,
         suffix: IconButton(
           icon: widget.obscureText.value
               ? const Icon(Icons.remove_red_eye_sharp)
@@ -56,6 +63,13 @@ class _SecretTextFormFieldState extends State<SecretTextFormField> {
         prefix: Icon(widget.prefixIcon,),
         contentPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
         labelText: widget.text,
+      ),
+    );
+  }
+  OutlineInputBorder buildOutlineInputBorder() {
+    return const OutlineInputBorder(
+      borderSide: BorderSide(
+        color: basicColor,
       ),
     );
   }
