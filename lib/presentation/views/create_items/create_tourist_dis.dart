@@ -18,11 +18,15 @@ class CreateNewTouristDis extends StatelessWidget {
     GlobalKey<FormState> formKey = GlobalKey();
 
     return BlocProvider(
-      create: (context) => CreateItemsCubit(),
+      create: (context) => CreateItemsCubit()..getCountry(),
       child: BlocConsumer<CreateItemsCubit, CreateItemsStates>(
         listener: (context, state) {
           if (state is ErrorToAddMultiImagesState) {
             errorToast(state.errorMessage);
+          }else if (state is ErrorGetCountryState) {
+            errorToast(state.errorMessage);
+          } else if(state is SuccessCreateTouristDisState){
+            successToast(state.successMessage);
           }
         },
         builder: (context, state) {
@@ -60,13 +64,33 @@ class CreateNewTouristDis extends StatelessWidget {
                           const SizedBox(
                             height: 32,
                           ),
+                          if(state is ! LoadingCreateTouristDisState)
                           CustomMaterialButton(
                             // width: 200,
                             child: const Text('Create'),
                             onPressed: () {
-                              if (!formKey.currentState!.validate()) {}
+                              if(!formKey.currentState!.validate() || cubit.pickedImages.isEmpty){
+                                errorToast('Please Fill The Empty Field');
+                              }else if(formKey.currentState!.validate()){
+                                cubit.createTouristDis().then((value){
+                                  cubit.cityId = 0;
+                                  cubit.countryId = 0;
+                                  cubit.pickedImages.clear();
+                                  cubit.nameController.clear();
+                                  cubit.aboutController.clear();
+                                  cubit.addressController.clear();
+                                  cubit.openingTimeController.clear();
+                                  cubit.closingTimeController.clear();
+                                  cubit.coordinateXController.clear();
+                                  cubit.coordinateYController.clear();
+                                });
+                              }
                             },
                           ),
+
+                          if(state is LoadingCreateTouristDisState)
+                            const CircularProgressIndicator()
+
                         ],
                       ),
                     ),

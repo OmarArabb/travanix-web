@@ -103,7 +103,7 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
     );
   }
 
-  Future<void> createHotel()async{
+  Future<void> createHotel() async {
 
     emit(LoadingCreateHotelState());
 
@@ -130,7 +130,7 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
     });
   }
 
-  Future<void> createRestaurant()async{
+  Future<void> createRestaurant() async {
 
     emit(LoadingCreateRestaurantState());
 
@@ -153,6 +153,29 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
       emit(ErrorCreateRestaurantState(errorMessage: error.errMessage));
     }, (message) {
       emit(SuccessCreateRestaurantState(successMessage:  message));
+    });
+  }
+
+  Future<void> createTouristDis() async {
+
+    emit(LoadingCreateTouristDisState());
+
+    var result = await createItemRepo.createTouristDis(data: {
+      "attraction_activity_name" : nameController.text,
+      "opening_time" : openingTimeController.text,
+      "closing_time" : closingTimeController.text,
+      "description" : aboutController.text,
+      "city_id" : cityId.toString(),
+      "address" : addressController.text,
+      "coordinate_x" : double.parse(coordinateXController.text),
+      "coordinate_y" : double.parse(coordinateYController.text),
+      "images": decodedImages
+    });
+
+    result.fold((error) {
+      emit(ErrorCreateTouristDisState(errorMessage: error.errMessage));
+    }, (message) {
+      emit(SuccessCreateTouristDisState(successMessage:  message));
     });
   }
 }

@@ -67,3 +67,16 @@ class ErrorCreateRestaurantState extends CreateItemsStates{
 
   ErrorCreateRestaurantState({required this.errorMessage});
 }
+
+class LoadingCreateTouristDisState extends CreateItemsStates{}
+class SuccessCreateTouristDisState extends CreateItemsStates{
+  final String successMessage;
+
+  SuccessCreateTouristDisState({required this.successMessage});
+}
+class ErrorCreateTouristDisState extends CreateItemsStates{
+
+  final String errorMessage;
+
+  ErrorCreateTouristDisState({required this.errorMessage});
+}
