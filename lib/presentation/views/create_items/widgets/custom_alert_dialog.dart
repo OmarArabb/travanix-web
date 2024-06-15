@@ -67,7 +67,6 @@ class _CustomCheckListTileState extends State<CustomCheckListTile> {
       onChanged: (value) {
         widget.selectedItem.add(widget.servicesModel.data![widget.index].id!);
         widget.selected = value!;
-        print(widget.selectedItem);
         setState(() {});
       },
       value: widget.selected,

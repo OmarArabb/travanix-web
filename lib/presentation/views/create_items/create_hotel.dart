@@ -123,7 +123,7 @@ class CreateNewHotel extends StatelessWidget {
                           ),
                           if(state is ! LoadingCreateHotelState)
                           CustomMaterialButton(
-                            child: const Text('Click'),
+                            child: const Text('Create'),
                             onPressed: () {
                               if(!formKey.currentState!.validate() || cubit.pickedImages.isEmpty || cubit.selectedFacilities.isEmpty){
                                 errorToast('Please Fill The Empty Field');
@@ -139,8 +139,6 @@ class CreateNewHotel extends StatelessWidget {
                                   cubit.aboutController.clear();
                                   cubit.phoneNumberController.clear();
                                   cubit.addressController.clear();
-                                  cubit.openingTimeController.clear();
-                                  cubit.closingTimeController.clear();
                                   cubit.coordinateXController.clear();
                                   cubit.coordinateYController.clear();
                                 });

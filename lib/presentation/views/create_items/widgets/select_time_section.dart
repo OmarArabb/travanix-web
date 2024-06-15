@@ -33,7 +33,7 @@ class SelectTimeSection extends StatelessWidget {
                 showTime(context).then((value) {
                   value != null ? cubit.openingTimeController.text =
                       time12to24Format(
-                          value.format(context)) : '';
+                          value.format(context)) : null;
                 });
               },
             ),
@@ -59,7 +59,7 @@ class SelectTimeSection extends StatelessWidget {
                 showTime(context).then((value) {
                   value != null ? cubit.closingTimeController.text =
                       time12to24Format(
-                          value.format(context)) : '';
+                          value.format(context)) : null;
                 });
               },
             ),

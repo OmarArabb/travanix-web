@@ -54,3 +54,16 @@ class ErrorCreateHotelState extends CreateItemsStates{
 
   ErrorCreateHotelState({required this.errorMessage});
 }
+
+class LoadingCreateRestaurantState extends CreateItemsStates{}
+class SuccessCreateRestaurantState extends CreateItemsStates{
+  final String successMessage;
+
+  SuccessCreateRestaurantState({required this.successMessage});
+}
+class ErrorCreateRestaurantState extends CreateItemsStates{
+
+  final String errorMessage;
+
+  ErrorCreateRestaurantState({required this.errorMessage});
+}

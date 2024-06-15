@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:travanix/core/functions/helper_function.dart';
 
 import 'package:travanix/core/functions/toast.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/core/widgets/custom_material_button.dart';
+import 'package:travanix/core/widgets/custom_text_form_field.dart';
 import 'package:travanix/presentation/manger/create_items_cubit/cubit.dart';
 import 'package:travanix/presentation/manger/create_items_cubit/states.dart';
 import 'package:travanix/presentation/views/create_items/widgets/add_images_section.dart';
@@ -21,16 +22,52 @@ class CreateRestaurant extends StatelessWidget {
     GlobalKey<FormState> formKey = GlobalKey();
 
     return BlocProvider(
-      create: (context) => CreateItemsCubit(),
+      create: (context) => CreateItemsCubit()..getCountry(),
       child: BlocConsumer<CreateItemsCubit, CreateItemsStates>(
         listener: (context, state) {
           if (state is ErrorToAddMultiImagesState) {
             errorToast(state.errorMessage);
+          }else if (state is ErrorGetCountryState) {
+            errorToast(state.errorMessage);
+          } else if(state is SuccessCreateRestaurantState){
+            successToast(state.successMessage);
           }
         },
         builder: (context, state) {
           CreateItemsCubit cubit = CreateItemsCubit.get(context);
           List<String> foodTypes = ['Syrian', 'Chinese', 'Japanese'];
+
+          List<Widget> additional = [
+            Padding(
+              padding: const EdgeInsets.only(left: 6.0, top: 6),
+              child: CustomTextFormField(
+                hintText: 'Restaurant Number',
+                validator: validateTextField,
+                enabledBorder: buildInputBorder(),
+                focusedBorder: buildInputBorder(),
+                filledColor: Colors.grey[200],
+                controller: cubit.phoneNumberController,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 6.0, top: 6),
+              child: CustomDropDownTextField(
+                  hint: 'Select food type',
+                  validator: (value) {
+                    return value == null ? 'Please fill this field' : null;
+                  },
+                  onChanged: (value) {
+                    cubit.foodType = value;
+                  },
+                  items: foodTypes.map((e) {
+                    return DropdownMenuItem(
+                      value: e,
+                      child: Text(e),
+                    );
+                  }).toList()),
+            ),
+            SelectTimeSection(cubit: cubit),
+          ];
 
           return Form(
             key: formKey,
@@ -53,42 +90,45 @@ class CreateRestaurant extends StatelessWidget {
                         children: [
                           InformationSection(
                             itemType: 'Restaurant',
-                            additional: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 6.0, top: 6),
-                                child: CustomDropDownTextField(
-                                    hint: 'Select food type',
-                                    validator: (value) {
-                                      return value == null
-                                          ? 'Please fill this field'
-                                          : null;
-                                    },
-                                    onChanged: (value) {},
-                                    items: foodTypes.map((e) {
-                                      return DropdownMenuItem(
-                                        value: e,
-                                        child: Text(e),
-                                      );
-                                    }).toList()),
-                              ),
-                              SelectTimeSection(cubit: cubit),
-                            ],
+                            additional: additional,
                           ),
                           const SizedBox(
                             height: 16,
                           ),
-                          const LocationSection(itemName: 'Restaurant',),
+                          const LocationSection(
+                            itemName: 'Restaurant',
+                          ),
                           const SizedBox(
                             height: 32,
                           ),
+                          if(state is ! LoadingCreateRestaurantState)
                           CustomMaterialButton(
                             // width: 200,
                             child: const Text('Create'),
                             onPressed: () {
-                              if (!formKey.currentState!.validate()) {}
+                              if(!formKey.currentState!.validate() || cubit.pickedImages.isEmpty){
+                                errorToast('Please Fill The Empty Field');
+                              }else if(formKey.currentState!.validate()){
+                                cubit.createRestaurant().then((value){
+                                  cubit.cityId = 0;
+                                  cubit.rate = 0;
+                                  cubit.foodType = null;
+                                  cubit.countryId = 0;
+                                  cubit.pickedImages.clear();
+                                  cubit.nameController.clear();
+                                  cubit.aboutController.clear();
+                                  cubit.phoneNumberController.clear();
+                                  cubit.addressController.clear();
+                                  cubit.openingTimeController.clear();
+                                  cubit.closingTimeController.clear();
+                                  cubit.coordinateXController.clear();
+                                  cubit.coordinateYController.clear();
+                                });
+                              }
                             },
                           ),
+                          if(state is LoadingCreateRestaurantState)
+                            const CircularProgressIndicator(),
                         ],
                       ),
                     ),
@@ -118,7 +158,4 @@ class CreateRestaurant extends StatelessWidget {
   InputBorder buildInputBorder() {
     return InputBorder.none;
   }
-
 }
-
-

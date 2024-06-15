@@ -86,7 +86,28 @@ class CreateItemRepo{
       return Right(response['message']);
     } catch (e) {
       if (e is DioException) {
-        print(e.toString());
+        return left(
+          ServerFailure.fromDioError(e),
+        );
+      }
+
+      return left(
+        ServerFailure(
+          e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<Either<Failure, String>> createRestaurant({required Map<String,dynamic> data}) async {
+    try {
+
+      var response = await ApiService.post(
+        endPoint: 'adminCreateResturant',data: data);
+
+      return Right(response['message']);
+    } catch (e) {
+      if (e is DioException) {
         return left(
           ServerFailure.fromDioError(e),
         );

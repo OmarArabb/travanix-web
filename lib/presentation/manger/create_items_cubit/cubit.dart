@@ -35,6 +35,7 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
   TextEditingController coordinateXController = TextEditingController();
   TextEditingController coordinateYController = TextEditingController();
 
+  String? foodType ;
   int rate = 0;
   int countryId = 0;
   int cityId = 0;
@@ -93,7 +94,6 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
     var result = await createItemRepo.getServices();
     result.fold(
           (error) {
-            print(error.errMessage);
         emit(ErrorGetServicesState(errorMessage: error.errMessage));
       },
           (servicesModel) {
@@ -124,11 +124,35 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
     });
 
     result.fold((error) {
-      print(error.errMessage);
       emit(ErrorCreateHotelState(errorMessage: error.errMessage));
     }, (message) {
-      print(message);
       emit(SuccessCreateHotelState(successMessage:  message));
+    });
+  }
+
+  Future<void> createRestaurant()async{
+
+    emit(LoadingCreateRestaurantState());
+
+    var result = await createItemRepo.createRestaurant(data: {
+      "resturant_name" :nameController.text,
+      "type_of_food" : foodType,
+      "city_id" : cityId.toString(),
+      "address" :addressController.text,
+      "coordinate_x" : double.parse(coordinateXController.text),
+      "coordinate_y" : double.parse(coordinateYController.text),
+      "closing_time" : closingTimeController.text,
+      "opining_time" : openingTimeController.text,
+      "phone_number" : phoneNumberController.text,
+      "descreption" : aboutController.text,
+      "resturant_class" : 1,
+      "images": decodedImages
+    });
+
+    result.fold((error) {
+      emit(ErrorCreateRestaurantState(errorMessage: error.errMessage));
+    }, (message) {
+      emit(SuccessCreateRestaurantState(successMessage:  message));
     });
   }
 }
