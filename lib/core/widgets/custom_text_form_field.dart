@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:travanix/core/styles/colors.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 
@@ -15,9 +16,10 @@ class CustomTextFormField extends StatelessWidget {
       this.focusedBorder,
       this.enabledBorder,
       this.hintText,
-      this.maxLines = 1});
+      this.maxLines = 1, this.onTap, this.inputFormatters});
 
   final String? text;
+  final List<TextInputFormatter>? inputFormatters;
   final String? hintText;
   final int? maxLines;
 
@@ -27,6 +29,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final void Function(String?)? onSaved;
+  final void Function()? onTap;
   final InputBorder? focusedBorder;
   final InputBorder? enabledBorder;
 
@@ -35,7 +38,9 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       maxLines: maxLines,
       controller: controller,
+      onTap: onTap,
       onSaved: onSaved,
+      inputFormatters: inputFormatters,
       onChanged: onChanged,
       validator: validator,
       textInputAction: TextInputAction.next,

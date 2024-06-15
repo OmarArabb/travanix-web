@@ -18,18 +18,18 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ValueNotifier<bool> obscureText = ValueNotifier(true);
-    // TextEditingController emailController = TextEditingController();
-    // TextEditingController passwordController = TextEditingController();
     GlobalKey<FormState> formKey = GlobalKey();
     return BlocProvider(
       create: (context) => LoginCubit(LoginRepo()),
-      child: BlocConsumer<LoginCubit,LoginStates>(
+      child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
-          if(state is ErrorLoginState){
+          if (state is ErrorLoginState) {
             errorToast(state.error);
-          }else if(state is SuccessLoginState && LoginCubit.get(context).model!.status == 0){
+          } else if (state is SuccessLoginState &&
+              LoginCubit.get(context).model!.status == 0) {
             errorToast(LoginCubit.get(context).model!.message!);
-          }else if(state is SuccessLoginState && LoginCubit.get(context).model!.status == 1){
+          } else if (state is SuccessLoginState &&
+              LoginCubit.get(context).model!.status == 1) {
             successToast(LoginCubit.get(context).model!.message!);
           }
         },
@@ -84,11 +84,12 @@ class LoginScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: CustomTextFormField(
                           focusedBorder: buildOutlineInputBorder(),
-                            prefixIcon: Icons.alternate_email,
-                            controller: cubit.emailController,
-                            text: 'Email',
-                            validator: validateEmail,
-                      ),),
+                          prefixIcon: Icons.alternate_email,
+                          controller: cubit.emailController,
+                          text: 'Email',
+                          validator: validateEmail,
+                        ),
+                      ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -118,13 +119,16 @@ class LoginScreen extends StatelessWidget {
                       CustomMaterialButton(
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            cubit.login().then((value){
-                              if(cubit.model!.status == 1){
-                                AppRouter.canExitFromLoginScreen = true;
-                                context.goNamed(AppRouter.homeRouteName);
-                              }
-                            });
-
+                            cubit.login().then(
+                              (value) {
+                                if (cubit.model!.status == 1) {
+                                  AppRouter.canExitFromLoginScreen = true;
+                                  context.goNamed(AppRouter.homeRouteName);
+                                  cubit.passwordController.dispose();
+                                  cubit.emailController.dispose();
+                                }
+                              },
+                            );
                           } else {}
                         },
                         formKey: formKey,
@@ -162,11 +166,10 @@ class LoginScreen extends StatelessWidget {
         r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
         r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
         r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
-        r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])'
-    ;
+        r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])';
     final regex = RegExp(pattern);
 
-    if(value!.isEmpty){
+    if (value!.isEmpty) {
       return 'Please Enter Your Email';
     }
 

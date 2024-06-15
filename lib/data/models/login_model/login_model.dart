@@ -1,6 +1,7 @@
 /// status : 1
 /// message : "loged in"
 /// access_token : "6|DPabjagx7UXxUqTnqjiBxHaIeAzThB76nXSwK9hUfe4fdf3f"
+library;
 
 class LoginModel {
   LoginModel({

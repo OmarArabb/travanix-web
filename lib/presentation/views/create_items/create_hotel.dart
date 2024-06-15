@@ -1,15 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travanix/core/functions/helper_function.dart';
 import 'package:travanix/core/functions/toast.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/core/widgets/custom_material_button.dart';
+import 'package:travanix/core/widgets/custom_text_form_field.dart';
 import 'package:travanix/presentation/manger/create_items_cubit/cubit.dart';
 import 'package:travanix/presentation/manger/create_items_cubit/states.dart';
 import 'package:travanix/presentation/views/create_items/widgets/add_images_section.dart';
+import 'package:travanix/presentation/views/create_items/widgets/custom_dropdown_textfield.dart';
 import 'package:travanix/presentation/views/create_items/widgets/information_section.dart';
 import 'package:travanix/presentation/views/create_items/widgets/location_section.dart';
+import 'package:travanix/presentation/views/create_items/widgets/select_facilities_section.dart';
 
 class CreateNewHotel extends StatelessWidget {
   const CreateNewHotel({super.key});
@@ -19,15 +21,69 @@ class CreateNewHotel extends StatelessWidget {
     GlobalKey<FormState> formKey = GlobalKey();
 
     return BlocProvider(
-      create: (context) => CreateItemsCubit(),
+      create: (context) => CreateItemsCubit()
+        ..getCountry()
+        ..getServices(),
       child: BlocConsumer<CreateItemsCubit, CreateItemsStates>(
         listener: (context, state) {
-          if(state is ErrorToAddMultiImagesState){
+          if (state is ErrorToAddMultiImagesState) {
             errorToast(state.errorMessage);
+          } else if (state is ErrorGetCountryState) {
+            errorToast(state.errorMessage);
+          } else if (state is ErrorGetServicesState) {
+            errorToast(state.errorMessage);
+          }else if(state is SuccessCreateHotelState){
+            successToast(state.successMessage);
           }
         },
         builder: (context, state) {
           CreateItemsCubit cubit = CreateItemsCubit.get(context);
+
+          int? hotelClassValue;
+
+          List<Widget> additional = [
+            Padding(
+              padding: const EdgeInsets.only(left: 6.0, top: 6),
+              child: CustomTextFormField(
+                hintText: 'Hotel Number',
+                validator: validateTextField,
+                enabledBorder: buildInputBorder(),
+                focusedBorder: buildInputBorder(),
+                filledColor: Colors.grey[200],
+                controller: cubit.phoneNumberController,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 6.0, top: 6),
+              child: CustomDropDownTextField(
+                  hint: 'Hotel Class',
+                  value: hotelClassValue,
+                  onChanged: (value) {
+                    cubit.rate = value;
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please fill this field';
+                    }
+                    return null;
+                  },
+                  items: [1, 2, 3, 4, 5].map((e) {
+                    List<Widget> list = [];
+                    for (var i = 0; i < e; i++) {
+                      list.add(const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ));
+                    }
+                    return DropdownMenuItem(
+                      value: e,
+                      child: Row(
+                        children: list,
+                      ),
+                    );
+                  }).toList()),
+            ),
+          ];
 
           return Form(
             key: formKey,
@@ -48,17 +104,51 @@ class CreateNewHotel extends StatelessWidget {
                       flex: 6,
                       child: Column(
                         children: [
-                          const InformationSection(),
+                          InformationSection(
+                            itemType: 'Hotel',
+                            additional: additional,
+                          ),
                           const SizedBox(
                             height: 16,
                           ),
-                          const LocationSection(),
+                          SelectFacilitiesSection(cubit: cubit),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          const LocationSection(
+                            itemName: 'Hotel',
+                          ),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          if(state is ! LoadingCreateHotelState)
                           CustomMaterialButton(
                             child: const Text('Click'),
                             onPressed: () {
-                              if (!formKey.currentState!.validate()) {}
+                              if(!formKey.currentState!.validate() || cubit.pickedImages.isEmpty || cubit.selectedFacilities.isEmpty){
+                                errorToast('Please Fill The Empty Field');
+                              }else if(formKey.currentState!.validate()){
+                                cubit.createHotel().then((value){
+                                  cubit.cityId = 0;
+                                  cubit.rate = 0;
+                                  cubit.countryId = 0;
+                                  hotelClassValue = null;
+                                  cubit.pickedImages.clear();
+                                  cubit.selectedFacilities.clear();
+                                  cubit.nameController.clear();
+                                  cubit.aboutController.clear();
+                                  cubit.phoneNumberController.clear();
+                                  cubit.addressController.clear();
+                                  cubit.openingTimeController.clear();
+                                  cubit.closingTimeController.clear();
+                                  cubit.coordinateXController.clear();
+                                  cubit.coordinateYController.clear();
+                                });
+                              }
                             },
-                          )
+                          ),
+                          if(state is LoadingCreateHotelState)
+                            const CircularProgressIndicator(),
                         ],
                       ),
                     ),
@@ -84,4 +174,5 @@ class CreateNewHotel extends StatelessWidget {
       ),
     );
   }
+
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travanix/core/routes/error_routing_page.dart';
 import 'package:travanix/presentation/views/create_items/create_hotel.dart';
+import 'package:travanix/presentation/views/create_items/create_restaurant.dart';
+import 'package:travanix/presentation/views/create_items/create_tourist_dis.dart';
 import 'package:travanix/presentation/views/home_layout/home_layout.dart';
 import 'package:travanix/presentation/views/login/login.dart';
 
@@ -115,10 +117,8 @@ abstract class AppRouter {
                       name: newRestaurantRouteName,
                       path: routesOfHomeLayoutBranches[5],
                       pageBuilder: (context, state) {
-                        return MaterialPage(
-                          child: Container(
-                            color: Colors.pink,
-                          ),
+                        return const MaterialPage(
+                          child: CreateRestaurant(),
                         );
                       }),
                 ]),
@@ -127,10 +127,8 @@ abstract class AppRouter {
                       name: newTouristDisRouteName,
                       path: routesOfHomeLayoutBranches[6],
                       pageBuilder: (context, state) {
-                        return MaterialPage(
-                          child: Container(
-                            color: Colors.orangeAccent,
-                          ),
+                        return const MaterialPage(
+                          child: CreateNewTouristDis()
                         );
                       }),
                 ]),

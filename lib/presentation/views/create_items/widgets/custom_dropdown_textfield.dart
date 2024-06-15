@@ -4,23 +4,27 @@ import 'package:travanix/core/styles/text_styles.dart';
 class CustomDropDownTextField extends StatelessWidget {
   const CustomDropDownTextField({
     super.key,
-    required this.hint,
+    this.hint,
     required this.onChanged,
-    required this.items, this.validator,
+    required this.items, this.validator, this.onTap, this.value,
   });
 
-  final String hint;
+  final String? hint;
   final void Function(dynamic)? onChanged;
   final List<DropdownMenuItem> items;
   final String? Function(dynamic)? validator;
+  final void Function()? onTap;
+  final dynamic value;
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
+      value: value,
+      isExpanded: true,
       validator: validator,
-      onTap: () {},
+      onTap: onTap,
       hint: Text(
-        hint,
+        hint!,
         style: AppTextStyles.styleRegular14().copyWith(
           fontWeight: FontWeight.w700,
         ),

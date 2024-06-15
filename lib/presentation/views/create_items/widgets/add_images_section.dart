@@ -26,7 +26,7 @@ class AddImagesSection extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       child: Material(
-        child: states is InitialCreateItemsState
+        child: cubit.pickedImages.isEmpty
             ? AddImagesItem(cubit: cubit)
             : ImagesSection(cubit: cubit),
       ),

@@ -29,6 +29,7 @@ class DrawerItemList extends StatelessWidget {
           onTap: () {
             HomeLayoutCubit.get(context).changeIndex(
               index + displacementRange,
+              context
             );
             navigationShell.goBranch(
               HomeLayoutCubit.get(context).currentIndex,

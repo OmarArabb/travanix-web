@@ -14,7 +14,13 @@ class ApiService {
     );
   }
 
-  Future<Map<String, dynamic>> get({required String endPoint}) async {
+  static Future<Map<String, dynamic>> get({required String endPoint}) async {
+    _dio.options.headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization':
+          'Bearer 2|byQgN6oRKKjnyQSg4MvEvMWMxWgelPcMTUIVzWMUff999e4e'
+    };
     var response = await _dio.get('$_baseUrl$endPoint');
     return response.data;
   }
@@ -24,6 +30,8 @@ class ApiService {
     _dio.options.headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'Authorization':
+      'Bearer 2|byQgN6oRKKjnyQSg4MvEvMWMxWgelPcMTUIVzWMUff999e4e'
     };
     var response = await _dio.post(
       '$_baseUrl$endPoint',

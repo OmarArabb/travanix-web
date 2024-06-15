@@ -9,3 +9,4 @@ class ErrorLoginState extends LoginStates{
   ErrorLoginState({required this.error});
 
 }
+
