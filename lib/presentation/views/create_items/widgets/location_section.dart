@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/core/widgets/custom_text_form_field.dart';
 import 'package:travanix/presentation/manger/create_items_cubit/cubit.dart';
+import 'package:travanix/presentation/manger/home_layout_cubit/home_layout_cubit.dart';
 import 'package:travanix/presentation/views/create_items/widgets/custom_dropdown_textfield.dart';
 
 class LocationSection extends StatefulWidget {
@@ -58,8 +59,8 @@ class _LocationSectionState extends State<LocationSection> {
                       }
                       return null;
                     },
-                    items: cubit.countryModel != null
-                        ? cubit.countryModel!.data!.map((e) {
+                    items: HomeLayoutCubit.get(context).countryModel != null
+                        ? HomeLayoutCubit.get(context).countryModel!.data!.map((e) {
                             return DropdownMenuItem<String>(
                               value: e.id.toString(),
                               child: Text(e.nationName!),

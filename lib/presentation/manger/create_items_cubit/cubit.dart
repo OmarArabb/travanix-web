@@ -61,20 +61,6 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
     emit(AddSingleImageItemsState());
   }
 
-  Future<void> getCountry() async {
-    emit(LoadingGetCountryState());
-    var result = await createItemRepo.getCountry();
-    result.fold(
-          (error) {
-        emit(ErrorGetCountryState(errorMessage: error.errMessage));
-      },
-          (countryModel) {
-        this.countryModel = countryModel;
-        emit(SuccessGetCountryState());
-      },
-    );
-  }
-
   Future<void> getCityById(int countryId) async {
     emit(LoadingGetCitiesState());
     var result = await createItemRepo.getCity(countryId: countryId);

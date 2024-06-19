@@ -22,7 +22,7 @@ class CreateRestaurant extends StatelessWidget {
     GlobalKey<FormState> formKey = GlobalKey();
 
     return BlocProvider(
-      create: (context) => CreateItemsCubit()..getCountry(),
+      create: (context) => CreateItemsCubit(),
       child: BlocConsumer<CreateItemsCubit, CreateItemsStates>(
         listener: (context, state) {
           if (state is ErrorToAddMultiImagesState) {

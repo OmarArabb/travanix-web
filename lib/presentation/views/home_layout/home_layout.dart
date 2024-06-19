@@ -17,7 +17,7 @@ class HomeLayout extends StatelessWidget {
 
 
     return BlocProvider<HomeLayoutCubit>(
-      create: (context) => HomeLayoutCubit(),
+      create: (context) => HomeLayoutCubit()..getCountry(),
       child: BlocBuilder<HomeLayoutCubit, HomeLayoutStates>(
         builder: (context, state) {
           HomeLayoutCubit cubit = HomeLayoutCubit.get(context);

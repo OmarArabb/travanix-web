@@ -22,7 +22,6 @@ class CreateNewHotel extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => CreateItemsCubit()
-        ..getCountry()
         ..getServices(),
       child: BlocConsumer<CreateItemsCubit, CreateItemsStates>(
         listener: (context, state) {
