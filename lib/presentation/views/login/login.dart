@@ -7,7 +7,6 @@ import 'package:travanix/core/routes/route.dart';
 import 'package:travanix/core/styles/colors.dart';
 import 'package:travanix/core/widgets/custom_material_button.dart';
 import 'package:travanix/core/widgets/custom_text_form_field.dart';
-import 'package:travanix/data/repos/login_repo.dart';
 import 'package:travanix/presentation/manger/login_cubit/cubit.dart';
 import 'package:travanix/presentation/manger/login_cubit/states.dart';
 import 'package:travanix/presentation/views/login/widgets/secret_text_form_field.dart';
@@ -20,7 +19,7 @@ class LoginScreen extends StatelessWidget {
     ValueNotifier<bool> obscureText = ValueNotifier(true);
     GlobalKey<FormState> formKey = GlobalKey();
     return BlocProvider(
-      create: (context) => LoginCubit(LoginRepo()),
+      create: (context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
           if (state is ErrorLoginState) {

@@ -6,6 +6,7 @@ import 'package:travanix/presentation/views/create_items/create_restaurant.dart'
 import 'package:travanix/presentation/views/create_items/create_tourist_dis.dart';
 import 'package:travanix/presentation/views/home_layout/home_layout.dart';
 import 'package:travanix/presentation/views/login/login.dart';
+import 'package:travanix/presentation/views/wallet_recharge/wallet_recharge.dart';
 
 abstract class AppRouter {
   static bool canExitFromLoginScreen = false;
@@ -24,7 +25,7 @@ abstract class AppRouter {
 
   static const List<String> routesOfHomeLayoutBranches = [
     'home',
-    'users',
+    'wallet_recharge',
     'notification',
     'new_plan',
     'new_hotel',
@@ -71,10 +72,8 @@ abstract class AppRouter {
                       name: usersRouteName,
                       path: routesOfHomeLayoutBranches[1],
                       pageBuilder: (context, state) {
-                        return MaterialPage(
-                          child: Container(
-                            color: Colors.purpleAccent,
-                          ),
+                        return const MaterialPage(
+                          child: WalletRecharge()
                         );
                       }),
                 ]),

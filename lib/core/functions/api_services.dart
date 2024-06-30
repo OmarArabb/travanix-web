@@ -19,7 +19,7 @@ class ApiService {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization':
-          'Bearer 2|byQgN6oRKKjnyQSg4MvEvMWMxWgelPcMTUIVzWMUff999e4e'
+          'Bearer 4|Y12rDzRZ22vy17WfTHe73WIlw5lQ0cQlsJJ2WQe27b023bcf'
     };
     var response = await _dio.get('$_baseUrl$endPoint');
     return response.data;
@@ -31,7 +31,7 @@ class ApiService {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization':
-      'Bearer 2|byQgN6oRKKjnyQSg4MvEvMWMxWgelPcMTUIVzWMUff999e4e'
+      'Bearer 4|Y12rDzRZ22vy17WfTHe73WIlw5lQ0cQlsJJ2WQe27b023bcf'
     };
     var response = await _dio.post(
       '$_baseUrl$endPoint',

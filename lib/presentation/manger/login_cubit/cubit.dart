@@ -5,11 +5,11 @@ import 'package:travanix/data/repos/login_repo.dart';
 import 'package:travanix/presentation/manger/login_cubit/states.dart';
 
 class LoginCubit extends Cubit<LoginStates> {
-  LoginCubit(this.loginRepo) : super(InitialLoginState());
+  LoginCubit() : super(InitialLoginState());
 
   static LoginCubit get(context) => BlocProvider.of(context);
 
-  final LoginRepo loginRepo;
+  final LoginRepo loginRepo = LoginRepo();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();

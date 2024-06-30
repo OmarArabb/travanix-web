@@ -21,7 +21,7 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     List<DrawerItemModel> drawerItemModel = [
       DrawerItemModel(itemName: 'HOME', itemIcon: Icons.home),
-      DrawerItemModel(itemName: 'USERS', itemIcon: Icons.people),
+      DrawerItemModel(itemName: 'WALLET RECHARGE', itemIcon: Icons.wallet),
       DrawerItemModel(itemName: 'NOTIFICATION', itemIcon: Icons.notifications),
       DrawerItemModel(itemName: 'PLAN', itemIcon: Icons.maps_home_work),
       DrawerItemModel(itemName: 'HOTEL', itemIcon: Icons.hotel),
