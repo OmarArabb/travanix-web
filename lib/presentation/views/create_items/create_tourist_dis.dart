@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travanix/core/functions/toast.dart';
+import 'package:travanix/core/styles/colors.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/core/widgets/custom_material_button.dart';
 import 'package:travanix/presentation/manger/create_items_cubit/cubit.dart';
@@ -66,23 +67,13 @@ class CreateNewTouristDis extends StatelessWidget {
                           ),
                           if(state is ! LoadingCreateTouristDisState)
                           CustomMaterialButton(
-                            // width: 200,
-                            child: const Text('Create'),
+                            child: const Text('Create',style: TextStyle(color: whiteColor),),
                             onPressed: () {
                               if(!formKey.currentState!.validate() || cubit.pickedImages.isEmpty){
                                 errorToast('Please Fill The Empty Field');
                               }else if(formKey.currentState!.validate()){
                                 cubit.createTouristDis().then((value){
-                                  cubit.cityId = 0;
-                                  cubit.countryId = 0;
-                                  cubit.pickedImages.clear();
-                                  cubit.nameController.clear();
-                                  cubit.aboutController.clear();
-                                  cubit.addressController.clear();
-                                  cubit.openingTimeController.clear();
-                                  cubit.closingTimeController.clear();
-                                  cubit.coordinateXController.clear();
-                                  cubit.coordinateYController.clear();
+                                  cubit.reInitialize();
                                 });
                               }
                             },

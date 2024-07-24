@@ -80,3 +80,16 @@ class ErrorCreateTouristDisState extends CreateItemsStates{
 
   ErrorCreateTouristDisState({required this.errorMessage});
 }
+
+class LoadingCreateTripState extends CreateItemsStates{}
+class SuccessCreateTripState extends CreateItemsStates{
+  final String successMessage;
+
+  SuccessCreateTripState({required this.successMessage});
+}
+class ErrorCreateTripState extends CreateItemsStates{
+
+  final String errorMessage;
+
+  ErrorCreateTripState({required this.errorMessage});
+}

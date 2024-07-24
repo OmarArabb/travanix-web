@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,7 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
 
   static CreateItemsCubit get(context) => BlocProvider.of(context);
 
-  CreateItemRepo createItemRepo = CreateItemRepo();
+  final CreateItemRepo _createItemRepo = CreateItemRepo();
 
   CountryModel? countryModel;
 
@@ -27,6 +28,8 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
   List<XFile> pickedImages = [];
 
   TextEditingController nameController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController numberOfSeatController = TextEditingController();
   TextEditingController aboutController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -35,11 +38,36 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
   TextEditingController coordinateXController = TextEditingController();
   TextEditingController coordinateYController = TextEditingController();
 
+
   String? foodType ;
   int rate = 0;
   int countryId = 0;
   int cityId = 0;
   List<int> selectedFacilities = [];
+  List<int> selectedHotels = [];
+  List<int> selectedRestaurants = [];
+  List<int> selectedAttractions = [];
+
+  void reInitialize(){
+    decodedImages = [];
+    pickedImages = [];
+    nameController.clear();
+    aboutController.clear();
+    phoneNumberController.clear();
+    addressController.clear();
+    openingTimeController.clear();
+    closingTimeController.clear();
+    coordinateXController.clear();
+    coordinateYController.clear();
+    foodType = null;
+    rate = 0;
+    countryId = 0;
+    cityId = 0;
+    selectedFacilities = [];
+    selectedHotels = [];
+    selectedRestaurants = [];
+    selectedAttractions = [];
+  }
 
   Future<void> pickAndEncodeMultiImages() async {
     try {
@@ -63,7 +91,7 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
 
   Future<void> getCityById(int countryId) async {
     emit(LoadingGetCitiesState());
-    var result = await createItemRepo.getCity(countryId: countryId);
+    var result = await _createItemRepo.getCity(countryId: countryId);
     result.fold(
           (error) {
         emit(ErrorGetCitiesState(errorMessage: error.errMessage));
@@ -77,7 +105,7 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
 
   Future<void> getServices() async {
     emit(LoadingGetServicesState());
-    var result = await createItemRepo.getServices();
+    var result = await _createItemRepo.getServices();
     result.fold(
           (error) {
         emit(ErrorGetServicesState(errorMessage: error.errMessage));
@@ -93,7 +121,7 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
 
     emit(LoadingCreateHotelState());
 
-    var result = await createItemRepo.createHotel(data: {
+    var result = await _createItemRepo.createHotel(data: {
       "hotel_name" :nameController.text,
       "simple_description_about_hotel" : aboutController.text,
       "reviews_about_hotel": "ddddd",
@@ -120,7 +148,7 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
 
     emit(LoadingCreateRestaurantState());
 
-    var result = await createItemRepo.createRestaurant(data: {
+    var result = await _createItemRepo.createRestaurant(data: {
       "resturant_name" :nameController.text,
       "type_of_food" : foodType,
       "city_id" : cityId.toString(),
@@ -131,7 +159,7 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
       "opining_time" : openingTimeController.text,
       "phone_number" : phoneNumberController.text,
       "descreption" : aboutController.text,
-      "resturant_class" : 1,
+      "resturant_class" : Random().nextInt(5),
       "images": decodedImages
     });
 
@@ -146,7 +174,7 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
 
     emit(LoadingCreateTouristDisState());
 
-    var result = await createItemRepo.createTouristDis(data: {
+    var result = await _createItemRepo.createTouristDis(data: {
       "attraction_activity_name" : nameController.text,
       "opening_time" : openingTimeController.text,
       "closing_time" : closingTimeController.text,
@@ -162,6 +190,67 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
       emit(ErrorCreateTouristDisState(errorMessage: error.errMessage));
     }, (message) {
       emit(SuccessCreateTouristDisState(successMessage:  message));
+    });
+  }
+
+  Future<void> createTrip() async {
+
+    emit(LoadingCreateTripState());
+
+    print({
+      "trip_name" : nameController.text,
+      "description" : aboutController.text,
+      "type_of_trip" :"HASSAN",
+      "price_trip" :int.parse(priceController.text),
+      "number_of_allSeat" :int.parse(numberOfSeatController.text),
+      "trip_start_time" : openingTimeController.text,
+      "trip_end_time" : closingTimeController.text,
+      "city_id" : cityId,
+      "address" : addressController.text,
+      "coordinate_x" : double.parse(coordinateXController.text) ,
+      "coordinate_y" : double.parse(coordinateYController.text),
+      "places":[
+        for (int value in selectedHotels) {
+          "hotel_id" : value
+        },
+        for (int value in selectedRestaurants) {
+          "resturant_id" : value
+        },
+        for (int value in selectedAttractions) {
+          "attraction_activity_id" : value
+        },
+      ]
+    });
+    var result = await _createItemRepo.createTrip(data: {
+      "trip_name" : nameController.text,
+      "description" : aboutController.text,
+      "type_of_trip" :"HASSAN",
+      "price_trip" :int.parse(priceController.text),
+      "number_of_allSeat" :int.parse(numberOfSeatController.text),
+      "trip_start_time" : openingTimeController.text,
+      "trip_end_time" : closingTimeController.text,
+      "city_id" : cityId,
+      "address" : addressController.text,
+      "coordinate_x" : double.parse(coordinateXController.text) ,
+      "coordinate_y" : double.parse(coordinateYController.text),
+      "places":[
+        for (int value in selectedHotels) {
+          "hotel_id" : value
+        },
+        for (int value in selectedRestaurants) {
+          "resturant_id" : value
+        },
+        for (int value in selectedAttractions) {
+          "attraction_activity_id" : value
+        },
+      ]
+    });
+
+    result.fold((error) {
+      emit(ErrorCreateTripState(errorMessage: error.errMessage));
+      print(error);
+    }, (message) {
+      emit(SuccessCreateTripState(successMessage:  message));
     });
   }
 }

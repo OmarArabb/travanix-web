@@ -27,6 +27,10 @@ class CustomDrawer extends StatelessWidget {
       DrawerItemModel(itemName: 'HOTEL', itemIcon: Icons.hotel),
       DrawerItemModel(itemName: 'RESTAURANT', itemIcon: Icons.restaurant),
       DrawerItemModel(itemName: 'TOURIST DESTINATION', itemIcon: Icons.castle),
+      DrawerItemModel(itemName: 'PLANS', itemIcon: Icons.maps_home_work_outlined),
+      DrawerItemModel(itemName: 'HOTELS', itemIcon: Icons.hotel_outlined),
+      DrawerItemModel(itemName: 'RESTAURANTS', itemIcon: Icons.restaurant_outlined),
+      DrawerItemModel(itemName: 'TOURIST DESTINATIONS', itemIcon: Icons.castle_outlined),
     ];
     return Container(
       color: navyBlueColor,
@@ -51,11 +55,22 @@ class CustomDrawer extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: CustomExpansionTile(
+              displacementRange: 3,
               cubit: cubit,
               navigationShell: navigationShell,
               drawerItemModel: drawerItemModel.getRange(3, 7).toList(),
               title: 'ADD',
               icon: Icons.add,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: CustomExpansionTile(
+              displacementRange: 7,
+              cubit: cubit,
+              navigationShell: navigationShell,
+              drawerItemModel: drawerItemModel.getRange(7, 11).toList(),
+              title: 'SHOW ITEMS',
+              icon: Icons.maps_home_work,
             ),
           ),
           const SliverFillRemaining(

@@ -1,9 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travanix/core/routes/error_routing_page.dart';
 import 'package:travanix/presentation/views/create_items/create_hotel.dart';
 import 'package:travanix/presentation/views/create_items/create_restaurant.dart';
 import 'package:travanix/presentation/views/create_items/create_tourist_dis.dart';
+import 'package:travanix/presentation/views/create_items/create_trip.dart';
+import 'package:travanix/presentation/views/get_items/get_hotels.dart';
+import 'package:travanix/presentation/views/get_items/get_plans.dart';
+import 'package:travanix/presentation/views/get_items/get_restaurants.dart';
+import 'package:travanix/presentation/views/get_items/get_tourist_dis.dart';
+import 'package:travanix/presentation/views/home/home.dart';
 import 'package:travanix/presentation/views/home_layout/home_layout.dart';
 import 'package:travanix/presentation/views/login/login.dart';
 import 'package:travanix/presentation/views/wallet_recharge/wallet_recharge.dart';
@@ -23,6 +30,11 @@ abstract class AppRouter {
   static const String newRestaurantRouteName = 'new_restaurant';
   static const String newTouristDisRouteName = 'new_tourist_dis';
 
+  static const String getPlanRouteName = 'get_plan';
+  static const String getHotelRouteName = 'get_hotel';
+  static const String getRestaurantRouteName = 'get_restaurant';
+  static const String getTouristDisRouteName = 'get_tourist_dis';
+
   static const List<String> routesOfHomeLayoutBranches = [
     'home',
     'wallet_recharge',
@@ -31,6 +43,10 @@ abstract class AppRouter {
     'new_hotel',
     'new_restaurant',
     'new_tourist_dis',
+    'get_plan',
+    'get_hotel',
+    'get_restaurant',
+    'get_tourist_dis',
   ];
 
   static final GoRouter router = GoRouter(
@@ -60,11 +76,7 @@ abstract class AppRouter {
                       name: homeRouteName,
                       path: routesOfHomeLayoutBranches[0],
                       pageBuilder: (context, state) {
-                        return MaterialPage(
-                          child: Container(
-                            color: Colors.indigo,
-                          ),
-                        );
+                        return const MaterialPage(child: HomeScreen());
                       }),
                 ]),
                 StatefulShellBranch(routes: [
@@ -72,9 +84,7 @@ abstract class AppRouter {
                       name: usersRouteName,
                       path: routesOfHomeLayoutBranches[1],
                       pageBuilder: (context, state) {
-                        return const MaterialPage(
-                          child: WalletRecharge()
-                        );
+                        return const MaterialPage(child: WalletRecharge());
                       }),
                 ]),
                 StatefulShellBranch(routes: [
@@ -94,10 +104,8 @@ abstract class AppRouter {
                       name: newPlanRouteName,
                       path: routesOfHomeLayoutBranches[3],
                       pageBuilder: (context, state) {
-                        return MaterialPage(
-                          child: Container(
-                            color: Colors.grey,
-                          ),
+                        return const MaterialPage(
+                          child: CreateTrip(),
                         );
                       }),
                 ]),
@@ -126,8 +134,46 @@ abstract class AppRouter {
                       name: newTouristDisRouteName,
                       path: routesOfHomeLayoutBranches[6],
                       pageBuilder: (context, state) {
+                        return const MaterialPage(child: CreateNewTouristDis());
+                      }),
+                ]),
+                StatefulShellBranch(routes: [
+                  GoRoute(
+                      name: getPlanRouteName,
+                      path: routesOfHomeLayoutBranches[7],
+                      pageBuilder: (context, state) {
                         return const MaterialPage(
-                          child: CreateNewTouristDis()
+                          child: GetPlans(),
+                        );
+                      }),
+                ]),
+                StatefulShellBranch(routes: [
+                  GoRoute(
+                      name: getHotelRouteName,
+                      path: routesOfHomeLayoutBranches[8],
+                      pageBuilder: (context, state) {
+                        return const MaterialPage(
+                          child: GetHotels(),
+                        );
+                      }),
+                ]),
+                StatefulShellBranch(routes: [
+                  GoRoute(
+                      name: getRestaurantRouteName,
+                      path: routesOfHomeLayoutBranches[9],
+                      pageBuilder: (context, state) {
+                        return const MaterialPage(
+                          child: GetRestaurants(),
+                        );
+                      }),
+                ]),
+                StatefulShellBranch(routes: [
+                  GoRoute(
+                      name: getTouristDisRouteName,
+                      path: routesOfHomeLayoutBranches[10],
+                      pageBuilder: (context, state) {
+                        return const MaterialPage(
+                          child: GetTouristDis(),
                         );
                       }),
                 ]),

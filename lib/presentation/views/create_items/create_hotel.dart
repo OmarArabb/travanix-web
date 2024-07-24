@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travanix/core/functions/helper_function.dart';
 import 'package:travanix/core/functions/toast.dart';
+import 'package:travanix/core/styles/colors.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/core/widgets/custom_material_button.dart';
 import 'package:travanix/core/widgets/custom_text_form_field.dart';
@@ -122,24 +123,13 @@ class CreateNewHotel extends StatelessWidget {
                           ),
                           if(state is ! LoadingCreateHotelState)
                           CustomMaterialButton(
-                            child: const Text('Create'),
+                            child: const Text('Create',style: TextStyle(color: whiteColor),),
                             onPressed: () {
                               if(!formKey.currentState!.validate() || cubit.pickedImages.isEmpty || cubit.selectedFacilities.isEmpty){
                                 errorToast('Please Fill The Empty Field');
                               }else if(formKey.currentState!.validate()){
                                 cubit.createHotel().then((value){
-                                  cubit.cityId = 0;
-                                  cubit.rate = 0;
-                                  cubit.countryId = 0;
-                                  hotelClassValue = null;
-                                  cubit.pickedImages.clear();
-                                  cubit.selectedFacilities.clear();
-                                  cubit.nameController.clear();
-                                  cubit.aboutController.clear();
-                                  cubit.phoneNumberController.clear();
-                                  cubit.addressController.clear();
-                                  cubit.coordinateXController.clear();
-                                  cubit.coordinateYController.clear();
+                                  cubit.reInitialize();
                                 });
                               }
                             },

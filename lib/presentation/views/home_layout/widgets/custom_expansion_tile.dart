@@ -13,7 +13,7 @@ class CustomExpansionTile extends StatelessWidget {
     required this.drawerItemModel,
     required this.title,
     required this.icon,
-    required this.navigationShell,
+    required this.navigationShell, required this.displacementRange,
   });
 
   final String title;
@@ -21,6 +21,7 @@ class CustomExpansionTile extends StatelessWidget {
   final HomeLayoutCubit cubit;
   final List<DrawerItemModel> drawerItemModel;
   final StatefulNavigationShell navigationShell;
+  final int displacementRange;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class CustomExpansionTile extends StatelessWidget {
       collapsedTextColor: whiteColor,
       children: [
         DrawerItemList(
-          displacementRange: 3,
+          displacementRange: displacementRange,
           drawerItemModel: drawerItemModel,
           navigationShell: navigationShell,
         ),

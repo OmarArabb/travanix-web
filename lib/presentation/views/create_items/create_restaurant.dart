@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travanix/core/functions/helper_function.dart';
 
 import 'package:travanix/core/functions/toast.dart';
+import 'package:travanix/core/styles/colors.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/core/widgets/custom_material_button.dart';
 import 'package:travanix/core/widgets/custom_text_form_field.dart';
@@ -21,7 +22,7 @@ class CreateRestaurant extends StatelessWidget {
   Widget build(BuildContext context) {
     GlobalKey<FormState> formKey = GlobalKey();
 
-    return BlocProvider(
+    return BlocProvider<CreateItemsCubit>(
       create: (context) => CreateItemsCubit(),
       child: BlocConsumer<CreateItemsCubit, CreateItemsStates>(
         listener: (context, state) {
@@ -104,25 +105,13 @@ class CreateRestaurant extends StatelessWidget {
                           if(state is ! LoadingCreateRestaurantState)
                           CustomMaterialButton(
                             // width: 200,
-                            child: const Text('Create'),
+                            child: const Text('Create',style: TextStyle(color: whiteColor),),
                             onPressed: () {
                               if(!formKey.currentState!.validate() || cubit.pickedImages.isEmpty){
                                 errorToast('Please Fill The Empty Field');
                               }else if(formKey.currentState!.validate()){
                                 cubit.createRestaurant().then((value){
-                                  cubit.cityId = 0;
-                                  cubit.rate = 0;
-                                  cubit.foodType = null;
-                                  cubit.countryId = 0;
-                                  cubit.pickedImages.clear();
-                                  cubit.nameController.clear();
-                                  cubit.aboutController.clear();
-                                  cubit.phoneNumberController.clear();
-                                  cubit.addressController.clear();
-                                  cubit.openingTimeController.clear();
-                                  cubit.closingTimeController.clear();
-                                  cubit.coordinateXController.clear();
-                                  cubit.coordinateYController.clear();
+                                  cubit.reInitialize();
                                 });
                               }
                             },
