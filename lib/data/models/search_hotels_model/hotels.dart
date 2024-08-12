@@ -1,20 +1,5 @@
-/// id : 1
-/// address : "Dubai"
-/// coordinate_y : 55.185241156464
-/// coordinate_x : 25.141418876386
-/// city_name : "Dubai"
-/// nation_name : "United Arab Emirates"
-/// simple_description_about_hotel : "A hotel that's home to cutting-edge engineering from the unique man-made beach and infinity pool terrace, to one of the tallest grand More"
-/// hotel_name : "Burj Al Arab"
-/// hotel_class : 7
-/// phone_number : "+971 4 301 7777"
-/// images : ["/images/hotels/Burj Al Arab1.jpg","/images/hotels/Burj Al Arab2.jpg","/images/hotels/Burj Al Arab3.jpg","/images/hotels/Burj Al Arab4.jpg","/images/hotels/Burj Al Arab5.jpg","/images/hotels/Burj Al Arab6.jpg","/images/hotels/Burj Al Arab7.jpg","/images/hotels/Burj Al Arab8.jpg"]
-/// services : ["Free wifi","Parking free","Buffer dinner","Breakfast"]
-library;
-
-
-class Data {
-  Data({
+class Hotels {
+  Hotels({
       this.id, 
       this.address, 
       this.coordinateY, 
@@ -28,7 +13,7 @@ class Data {
       this.images, 
       this.services,});
 
-  Data.fromJson(dynamic json) {
+  Hotels.fromJson(dynamic json) {
     id = json['id'];
     address = json['address'];
     coordinateY = json['coordinate_y'];

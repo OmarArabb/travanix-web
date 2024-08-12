@@ -21,8 +21,8 @@ class HomeLayoutCubit extends Cubit<HomeLayoutStates>{
       countryModel = CountryModel.fromJson(value);
       emit(SuccessGetCountryState());
     }).catchError((error){
-      emit(ErrorGetCountryState(errorMessage: error.toString()));
-      ServerFailure(error.toString());
+      emit(ErrorGetCountryState(errorMessage: ServerFailure(error.toString()).errMessage));
+
     });
 
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:travanix/core/functions/toast.dart';
 
 import 'package:travanix/presentation/manger/home_layout_cubit/home_layout_cubit.dart';
 import 'package:travanix/presentation/manger/home_layout_cubit/home_layout_states.dart';
@@ -18,7 +19,12 @@ class HomeLayout extends StatelessWidget {
 
     return BlocProvider<HomeLayoutCubit>(
       create: (context) => HomeLayoutCubit()..getCountry(),
-      child: BlocBuilder<HomeLayoutCubit, HomeLayoutStates>(
+      child: BlocConsumer<HomeLayoutCubit, HomeLayoutStates>(
+        listener: (context, state) {
+          if(state is ErrorGetCountryState){
+            errorToast(state.errorMessage);
+          }
+        },
         builder: (context, state) {
           HomeLayoutCubit cubit = HomeLayoutCubit.get(context);
           return Scaffold(

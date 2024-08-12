@@ -48,8 +48,6 @@ class _GridItemState extends State<GridItem> {
               ? widget.selectedItems.remove(widget.model.data[widget.index].id)
               : widget.selectedItems.add(widget.model.data[widget.index].id);
 
-          print(widget.selectedItems);
-
           setState(() {});
         },
         child: Container(

@@ -56,6 +56,7 @@ class CreateNewHotel extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 6.0, top: 6),
               child: CustomDropDownTextField(
+                filledColor: Colors.grey[200]!,
                   hint: 'Hotel Class',
                   value: hotelClassValue,
                   onChanged: (value) {

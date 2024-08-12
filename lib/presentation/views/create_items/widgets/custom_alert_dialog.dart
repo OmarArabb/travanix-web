@@ -20,7 +20,8 @@ class CustomAlertDialog extends StatelessWidget {
         'Select facilities',
         style: AppTextStyles.styleRegular16().copyWith(color: basicColor),
       ),
-      content: SizedBox(
+
+      content: servicesModel != null ? SizedBox(
         width: 300,
         child: ListView.builder(
           shrinkWrap: true,
@@ -35,7 +36,7 @@ class CustomAlertDialog extends StatelessWidget {
           itemCount: servicesModel!.data!.length,
           physics: const BouncingScrollPhysics(),
         ),
-      ),
+      ) : null,
     );
   }
 }
@@ -69,7 +70,7 @@ class _CustomCheckListTileState extends State<CustomCheckListTile> {
         widget.selected = value!;
         setState(() {});
       },
-      value: widget.selected,
+      value: widget.selectedItem.contains(widget.servicesModel.data![widget.index].id!) ? true : false,
       title: Text(widget.servicesModel.data![widget.index].service!),
     );
   }

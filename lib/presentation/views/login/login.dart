@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:travanix/constant.dart';
 import 'package:travanix/core/functions/toast.dart';
 import 'package:travanix/core/generated/assets.dart';
 import 'package:travanix/core/routes/route.dart';
@@ -115,16 +116,19 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 40,
                       ),
+                      if(state is !LoadingLoginState)
                       CustomMaterialButton(
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             cubit.login().then(
                               (value) {
                                 if (cubit.model!.status == 1) {
+                                  taken = cubit.model!.accessToken!;
+                                  print('========================= ${cubit.model!.accessToken}');
                                   AppRouter.canExitFromLoginScreen = true;
                                   context.goNamed(AppRouter.homeRouteName);
-                                  cubit.passwordController.dispose();
-                                  cubit.emailController.dispose();
+                                  AppRouter.canExitFromLoginScreen = false;
+
                                 }
                               },
                             );
@@ -136,6 +140,8 @@ class LoginScreen extends StatelessWidget {
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
+                      if(state is LoadingLoginState)
+                        const CircularProgressIndicator(),
                       const SizedBox(
                         height: 20,
                       )

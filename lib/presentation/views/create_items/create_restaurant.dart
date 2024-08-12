@@ -53,6 +53,7 @@ class CreateRestaurant extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 6.0, top: 6),
               child: CustomDropDownTextField(
+                filledColor: Colors.grey[200]!,
                   hint: 'Select food type',
                   validator: (value) {
                     return value == null ? 'Please fill this field' : null;

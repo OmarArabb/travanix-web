@@ -18,26 +18,33 @@ class WalletRecharge extends StatelessWidget {
           if (state is SuccessRechargeWalletState) {
             successToast(state.successMessage);
           }
+          if (state is ErrorRechargeWalletState) {
+            errorToast(state.errMessage);
+          }
+          if (state is ErrorGetRequestState) {
+            errorToast(state.errMessage);
+          }
         },
         builder: (context, state) {
-          if (state is SuccessGetRequestState ||
-              state is SuccessRechargeWalletState) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Wallet Recharge Requests',
-                  style: AppTextStyles.styleSemiBold24(),
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Wallet Recharge Requests',
+                style: AppTextStyles.styleSemiBold24(),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              if (state is SuccessGetRequestState ||
+                  state is SuccessRechargeWalletState)
                 const RechargeGridView(),
-              ],
-            );
-          }
-          return const Center(child: CircularProgressIndicator());
+              if (state is LoadingRechargeWalletState ||
+                  state is LoadingGetRequestState)
+                const Center(child: CircularProgressIndicator()),
+            ],
+          );
         },
       ),
     );

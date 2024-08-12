@@ -11,7 +11,6 @@ class GetItemsCubit extends Cubit<GetItemStates> {
 
   static GetItemsCubit get(context) => BlocProvider.of(context);
 
-
   final GetItemsRepo  _getItemsRepo = GetItemsRepo();
 
   HotelModel? hotelsModel;

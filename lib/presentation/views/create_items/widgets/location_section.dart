@@ -45,6 +45,7 @@ class _LocationSectionState extends State<LocationSection> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 6.0, top: 6),
                   child: CustomDropDownTextField(
+                    filledColor: Colors.grey[200]!,
                     hint: 'Select Country',
                     onChanged: (value) async {
                       selectedValue = null;
@@ -74,6 +75,7 @@ class _LocationSectionState extends State<LocationSection> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 6.0, top: 6),
                   child: CustomDropDownTextField(
+                    filledColor: Colors.grey[200]!,
                     hint: 'Select City',
                     value: selectedValue,
                     onChanged: (value) {

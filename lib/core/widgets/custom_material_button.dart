@@ -7,7 +7,7 @@ class CustomMaterialButton extends StatelessWidget {
     this.formKey,
     required this.child,
     this.width = 376,
-    this.height = 50, required this.onPressed,
+    this.height = 50, required this.onPressed, this.color = basicColor,
   });
 
   final GlobalKey<FormState>? formKey;
@@ -15,6 +15,7 @@ class CustomMaterialButton extends StatelessWidget {
   final Widget child;
   final double width;
   final double height;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class CustomMaterialButton extends StatelessWidget {
       onPressed: onPressed,
       minWidth: width,
       height: height,
-      color: basicColor,
+      color: color,
       child: child,);
   }
 }

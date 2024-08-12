@@ -197,30 +197,6 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
 
     emit(LoadingCreateTripState());
 
-    print({
-      "trip_name" : nameController.text,
-      "description" : aboutController.text,
-      "type_of_trip" :"HASSAN",
-      "price_trip" :int.parse(priceController.text),
-      "number_of_allSeat" :int.parse(numberOfSeatController.text),
-      "trip_start_time" : openingTimeController.text,
-      "trip_end_time" : closingTimeController.text,
-      "city_id" : cityId,
-      "address" : addressController.text,
-      "coordinate_x" : double.parse(coordinateXController.text) ,
-      "coordinate_y" : double.parse(coordinateYController.text),
-      "places":[
-        for (int value in selectedHotels) {
-          "hotel_id" : value
-        },
-        for (int value in selectedRestaurants) {
-          "resturant_id" : value
-        },
-        for (int value in selectedAttractions) {
-          "attraction_activity_id" : value
-        },
-      ]
-    });
     var result = await _createItemRepo.createTrip(data: {
       "trip_name" : nameController.text,
       "description" : aboutController.text,
@@ -248,7 +224,6 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
 
     result.fold((error) {
       emit(ErrorCreateTripState(errorMessage: error.errMessage));
-      print(error);
     }, (message) {
       emit(SuccessCreateTripState(successMessage:  message));
     });

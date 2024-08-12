@@ -6,7 +6,7 @@ class CustomDropDownTextField extends StatelessWidget {
     super.key,
     this.hint,
     required this.onChanged,
-    required this.items, this.validator, this.onTap, this.value,
+    required this.items, this.validator, this.onTap, this.value, required this.filledColor,
   });
 
   final String? hint;
@@ -15,6 +15,7 @@ class CustomDropDownTextField extends StatelessWidget {
   final String? Function(dynamic)? validator;
   final void Function()? onTap;
   final dynamic value;
+  final Color filledColor ;
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +24,14 @@ class CustomDropDownTextField extends StatelessWidget {
       isExpanded: true,
       validator: validator,
       onTap: onTap,
-      hint: Text(
+      hint: hint != null ?  Text(
         hint!,
         style: AppTextStyles.styleRegular14().copyWith(
           fontWeight: FontWeight.w700,
         ),
-      ),
+      ) : null,
       decoration: InputDecoration(
-          fillColor: Colors.grey[200],
+          fillColor: filledColor,
           filled: true,
           border: InputBorder.none,
           errorBorder: const OutlineInputBorder(

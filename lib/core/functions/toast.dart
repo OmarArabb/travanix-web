@@ -13,7 +13,7 @@ void successToast(String message) {
   Fluttertoast.showToast(
     msg: message,
     timeInSecForIosWeb: 2,
-    webBgColor: '#50B531',
+    webBgColor: '#ff7122',
     textColor: whiteColor,
   );
 }
