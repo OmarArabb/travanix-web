@@ -2,9 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:travanix/core/failures.dart';
 import 'package:travanix/core/functions/api_services.dart';
+import 'package:travanix/data/models/hotel_reservations_model/hotel_reservations_model.dart';
 import 'package:travanix/data/models/trip_reservations_model/trip_reservations_model.dart';
 
-class GetReservationsRepo{
+class GetReservationsRepo {
   Future<Either<Failure, TripReservationsModel>> getTripReservations() async {
     try {
       TripReservationsModel? model;
@@ -29,15 +30,14 @@ class GetReservationsRepo{
     }
   }
 
-
-  Future<Either<Failure, TripReservationsModel>> getHotelReservations() async {
+  Future<Either<Failure, HotelReservationsModel>> getHotelReservations() async {
     try {
-      TripReservationsModel? model;
+      HotelReservationsModel? model;
       var data = await ApiService.get(
         endPoint: 'adminGetReserved',
       );
 
-      model = TripReservationsModel.fromJson(data);
+      model = HotelReservationsModel.fromJson(data);
       return Right(model);
     } catch (e) {
       if (e is DioException) {
@@ -53,6 +53,4 @@ class GetReservationsRepo{
       );
     }
   }
-
-
 }

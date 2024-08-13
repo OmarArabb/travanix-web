@@ -4,6 +4,7 @@ import 'package:travanix/core/functions/toast.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/presentation/manger/get_reservations/cubit.dart';
 import 'package:travanix/presentation/manger/get_reservations/states.dart';
+import 'package:travanix/presentation/views/reservations/widgets/hotel_reservation_table.dart';
 import 'package:travanix/presentation/views/reservations/widgets/switch_between_reservation_bar.dart';
 import 'package:travanix/presentation/views/reservations/widgets/trip_reservations_table.dart';
 
@@ -12,16 +13,15 @@ class ReservationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider(
       create: (context) => GetReservationsCubit()..getTripReservations(),
       child: BlocConsumer<GetReservationsCubit, GetReservationsStates>(
         listener: (context, state) {
-          if(state is ErrorGetTripReservationsState){
+          if (state is ErrorGetTripReservationsState) {
             errorToast(state.errMessage);
-          }else if(state is ErrorEditReservationsState){
+          } else if (state is ErrorEditReservationsState) {
             errorToast(state.errMessage);
-          }else if(state is SuccessEditReservationsState){
+          } else if (state is SuccessEditReservationsState) {
             successToast(state.successMessage);
           }
         },
@@ -32,7 +32,9 @@ class ReservationsScreen extends StatelessWidget {
             TripReservationsDataTable(
               cubit: cubit,
             ),
-            const SizedBox(),
+            HotelReservationsDataTable(
+              cubit: cubit,
+            ),
           ];
 
           return Column(
@@ -48,10 +50,10 @@ class ReservationsScreen extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              if(state is SuccessGetTripReservationsState || state is RemoveItemFromReservations)
-              Center(child: screens[cubit.currentIndex]),
-
-              if(state is LoadingGetTripReservationsState)
+              if (state is SuccessGetTripReservationsState || state is SuccessGetHotelReservationsState ||
+                  state is RemoveItemFromReservations)
+                Center(child: screens[cubit.currentIndex]),
+              if (state is LoadingGetTripReservationsState || state is LoadingGetHotelReservationsState)
                 const Center(child: CircularProgressIndicator()),
             ],
           );
@@ -60,6 +62,3 @@ class ReservationsScreen extends StatelessWidget {
     );
   }
 }
-
-
-

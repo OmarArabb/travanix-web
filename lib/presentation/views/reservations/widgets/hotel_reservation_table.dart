@@ -3,8 +3,8 @@ import 'package:travanix/core/styles/colors.dart';
 import 'package:travanix/presentation/manger/get_reservations/cubit.dart';
 import 'package:travanix/presentation/views/create_items/widgets/custom_dropdown_textfield.dart';
 
-class TripReservationsDataTable extends StatelessWidget {
-  const TripReservationsDataTable({
+class HotelReservationsDataTable extends StatelessWidget {
+  const HotelReservationsDataTable({
     super.key,
     required this.cubit,
   });
@@ -22,28 +22,27 @@ class TripReservationsDataTable extends StatelessWidget {
       columnSpacing: 70,
       dataRowMaxHeight: 60,
       columns: const [
-        DataColumn(label: Text('Trip Name')),
-        DataColumn(label: Text('Trip Price')),
-        DataColumn(label: Text('Reservation seats')),
-        DataColumn(label: Text('Available Seats')),
-        DataColumn(label: Text('User Name')),
-        DataColumn(label: Text('User Phone')),
+        DataColumn(label: Text('Hotel Name')),
+        DataColumn(label: Text('Tourist Name')),
+        DataColumn(label: Text('Start Reservation')),
+        DataColumn(label: Text('End Reservation')),
+        DataColumn(label: Text('Total Price')),
         DataColumn(label: Text('Reservations Status')),
       ],
-      rows: cubit.tripReservations.map(
+      rows: cubit.hotelReservations.map(
         (data) {
           return DataRow(cells: [
             DataCell(
-              Text(data.tripName!),
+              Text(data.touristName!),
             ),
             DataCell(
-              Text(data.priceTrip.toString()),
+              Text(data.hotelName.toString()),
             ),
             DataCell(
-              Text(data.numberOfSeatReserved.toString()),
+              Text(data.startReservation.toString()),
             ),
             DataCell(
-              Text(data.numberOfSeatsAvailable.toString()),
+              Text(data.endReservation.toString()),
             ),
             DataCell(
               onTap: () {
@@ -54,14 +53,14 @@ class TripReservationsDataTable extends StatelessWidget {
                       title: const Text('Rooms'),
                       content: DataTable(
                         columns: const [
-                          DataColumn(label: Text('Person Name')),
-                          DataColumn(label: Text('Person Age'))
+                          DataColumn(label: Text('Room Capacity')),
+                          DataColumn(label: Text('Number Of Rooms'))
                         ],
-                        rows: data.details!.map(
+                        rows: data.rooms!.map(
                           (e) {
                             return DataRow(cells: [
-                              DataCell(Text(e.name.toString())),
-                              DataCell(Text(e.age.toString())),
+                              DataCell(Text(e.capacityRoom.toString())),
+                              DataCell(Text(e.number.toString())),
                             ]);
                           },
                         ).toList(),
@@ -70,17 +69,14 @@ class TripReservationsDataTable extends StatelessWidget {
                   },
                 );
               },
-              Text(data.touristName!),
-            ),
-            DataCell(
-              Text(data.phoneNumber!),
+              Text(data.priceAllReserve.toString()),
             ),
             DataCell(CustomDropDownTextField(
               filledColor: Colors.transparent,
               value: data.status!,
               onChanged: (value) {
-                cubit.editTripReservationStatus(
-                    {"id": data.reserveId, "status": value.toString()});
+                cubit.editHotelReservationStatus(
+                    {"id": data.id, "status": value.toString()});
                 cubit.removeItem(data);
               },
               items: status.map(

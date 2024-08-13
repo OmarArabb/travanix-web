@@ -1,4 +1,5 @@
 import 'places.dart';
+import 'details.dart';
 
 /// id : 1
 /// reserve_id : 1
@@ -19,13 +20,13 @@ import 'places.dart';
 /// image : "/images/attraction_activities/Jerash1.jpg"
 /// places : [{"hotel_id":3},{"resturant_id":1},{"attraction_activity_id":1}]
 /// number_of_seats_available : 47
-/// status : "Pending"
+/// status : "Canceled"
 /// number_of_seat_reserved : 2
 /// phone_number : "09345234343"
 /// Email_address : "nameaalbad@gmail.com"
 /// tourist_name : "nawwar"
 /// wallet : 333333333
-/// details : [["hassan",21,1],["omar",21,2]]
+/// details : [{"name":"hassan","age":21,"id":1},{"name":"omar","age":21,"id":2}]
 
 class Data {
   Data({
@@ -87,7 +88,12 @@ class Data {
     emailAddress = json['Email_address'];
     touristName = json['tourist_name'];
     wallet = json['wallet'];
-    details = json['details'] != null ? json['details'].cast<String>() : [];
+    if (json['details'] != null) {
+      details = [];
+      json['details'].forEach((v) {
+        details?.add(Details.fromJson(v));
+      });
+    }
   }
   int? id;
   int? reserveId;
@@ -114,7 +120,7 @@ class Data {
   String? emailAddress;
   String? touristName;
   int? wallet;
-  List<dynamic>? details;
+  List<Details>? details;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -145,7 +151,9 @@ class Data {
     map['Email_address'] = emailAddress;
     map['tourist_name'] = touristName;
     map['wallet'] = wallet;
-    map['details'] = details;
+    if (details != null) {
+      map['details'] = details?.map((v) => v.toJson()).toList();
+    }
     return map;
   }
 
