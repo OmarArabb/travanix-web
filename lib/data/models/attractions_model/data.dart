@@ -40,8 +40,8 @@ class Data {
   }
   int? id;
   String? address;
-  int? coordinateY;
-  int? coordinateX;
+  double? coordinateY;
+  double? coordinateX;
   String? cityName;
   String? nationName;
   String? attractionActivityName;

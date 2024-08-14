@@ -1,5 +1,4 @@
-/// capacity_room : 1
-/// number : 3
+
 
 class Rooms {
   Rooms({

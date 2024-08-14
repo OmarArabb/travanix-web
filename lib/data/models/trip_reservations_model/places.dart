@@ -1,4 +1,3 @@
-/// hotel_id : 3
 
 class Places {
   Places({

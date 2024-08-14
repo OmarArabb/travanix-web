@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/presentation/manger/search_cubit/cubit.dart';
 
-class HotelItem extends StatelessWidget {
-  const HotelItem({
+class RestaurantItem extends StatelessWidget {
+  const RestaurantItem({
     super.key,
     required this.cubit,
     required this.index,
@@ -19,7 +19,7 @@ class HotelItem extends StatelessWidget {
       padding: const EdgeInsets.only(right: 16.0),
       child: InkWell(
         onTap: () {
-          context.pushNamed('hotel_details/:id',pathParameters: {'id': cubit.searchHotelsModel!.hotels![index].id.toString()});
+          context.pushNamed('restaurant_details',pathParameters: {'id': cubit.searchRestaurantsModel!.resturants![index].id.toString()});
         },
         child: Container(
           decoration: BoxDecoration(
@@ -38,7 +38,7 @@ class HotelItem extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 1080 / 780,
                   child: Image.network(
-                    'http://127.0.0.1:8000${cubit.searchHotelsModel!.hotels![index].images![0]}',
+                    'http://127.0.0.1:8000${cubit.searchRestaurantsModel!.resturants![index].images![0]}',
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -49,7 +49,7 @@ class HotelItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 4.0),
                 child: Text(
-                  cubit.searchHotelsModel!.hotels![index].hotelName!,
+                  cubit.searchRestaurantsModel!.resturants![index].resturantName!,
                   style: AppTextStyles.styleSemiBold16(),
                 ),
               ),
@@ -69,7 +69,7 @@ class HotelItem extends StatelessWidget {
                   ),
                   Flexible(
                     child: Text(
-                      '${cubit.searchHotelsModel!.hotels![index].nationName} / ${cubit.searchHotelsModel!.hotels![index].cityName} / ${cubit.searchHotelsModel!.hotels![index].address}',
+                      '${cubit.searchRestaurantsModel!.resturants![index].nationName} / ${cubit.searchRestaurantsModel!.resturants![index].cityName} / ${cubit.searchRestaurantsModel!.resturants![index].address}',
                       style: AppTextStyles.styleRegular12().copyWith(
                         fontWeight: FontWeight.w800,
                         color: Colors.grey[400],
@@ -85,7 +85,7 @@ class HotelItem extends StatelessWidget {
                     width: 6,
                   ),
                   for (int i = 0;
-                  i < cubit.searchHotelsModel!.hotels![index].hotelClass!;
+                  i < cubit.searchRestaurantsModel!.resturants![index].resturantClass!;
                   i++)
                     const Icon(
                       Icons.star,

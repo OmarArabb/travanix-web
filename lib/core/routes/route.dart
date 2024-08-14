@@ -7,13 +7,15 @@ import 'package:travanix/presentation/views/create_items/create_tourist_dis.dart
 import 'package:travanix/presentation/views/create_items/create_trip.dart';
 import 'package:travanix/presentation/views/home/home.dart';
 import 'package:travanix/presentation/views/home_layout/home_layout.dart';
+import 'package:travanix/presentation/views/item_details/restaurant_details.dart';
+import 'package:travanix/presentation/views/item_details/tourist_dis_details.dart';
 import 'package:travanix/presentation/views/login/login.dart';
 import 'package:travanix/presentation/views/reservations/reservations.dart';
 import 'package:travanix/presentation/views/search_items/search_hotels.dart';
 import 'package:travanix/presentation/views/search_items/search_plans.dart';
 import 'package:travanix/presentation/views/search_items/search_restaurants.dart';
 import 'package:travanix/presentation/views/search_items/search_tourist_dis.dart';
-import 'package:travanix/presentation/views/search_items/hotel_details.dart';
+import 'package:travanix/presentation/views/item_details/hotel_details.dart';
 import 'package:travanix/presentation/views/wallet_recharge/wallet_recharge.dart';
 
 abstract class AppRouter {
@@ -51,7 +53,7 @@ abstract class AppRouter {
   ];
 
   static final GoRouter router = GoRouter(
-    initialLocation: loginRoute,
+    initialLocation: '/$homeRouteName',
     routes: [
       GoRoute(
         name: loginRouteName,
@@ -156,11 +158,11 @@ abstract class AppRouter {
                       );
                     }),
                 GoRoute(
-                    name: 'hotel_details',
-                    path: 'hotel_details',
+                    name: 'hotel_details/:id',
+                    path: 'hotel_details/:id',
                     pageBuilder: (context, state) {
-                      return const MaterialPage(
-                        child: HotelDetails(),
+                      return MaterialPage(
+                        child: HotelDetails(hotelId: int.parse(state.pathParameters['id']!),),
                       );
                     }),
               ]),
@@ -170,7 +172,16 @@ abstract class AppRouter {
                     path: routesOfHomeLayoutBranches[9],
                     pageBuilder: (context, state) {
                       return const MaterialPage(
-                        child: GetRestaurants(),
+                        child: SearchRestaurant(),
+                      );
+                    }),
+                GoRoute(
+                    name: 'restaurant_details',
+                    path: 'restaurant_details/:id',
+                    pageBuilder: (context, state) {
+
+                      return MaterialPage(
+                        child: RestaurantDetails(restaurantId: int.parse(state.pathParameters['id']!),),
                       );
                     }),
               ]),
@@ -181,10 +192,19 @@ abstract class AppRouter {
                     path: routesOfHomeLayoutBranches[10],
                     pageBuilder: (context, state) {
                       return const MaterialPage(
-                        child: GetTouristDis(),
+                        child: SearchTouristDis(),
                       );
                     },
                   ),
+                  GoRoute(
+                      name: 'tourist_dis_details/:id',
+                      path: 'tourist_dis_details/:id',
+                      pageBuilder: (context, state) {
+                        print(int.parse(state.pathParameters['id']!));
+                        return MaterialPage(
+                          child: TouristDisDetails(touristDisId: int.parse(state.pathParameters['id']!),),
+                        );
+                      }),
                 ],
               ),
             ],

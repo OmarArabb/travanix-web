@@ -52,7 +52,6 @@ class GetReservationsCubit extends Cubit<GetReservationsStates> {
 
     result.fold(
       (error) {
-        print('${error.errMessage}]]]]]]]]]]]]]]]]');
         emit(ErrorGetTripReservationsState(errMessage: error.errMessage));
       },
       (tripReservationsModel) {

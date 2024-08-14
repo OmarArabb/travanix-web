@@ -1,6 +1,4 @@
-/// name : "hassan"
-/// age : 21
-/// id : 1
+
 
 class Details {
   Details({

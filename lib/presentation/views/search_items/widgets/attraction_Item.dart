@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/presentation/manger/search_cubit/cubit.dart';
 
-class HotelItem extends StatelessWidget {
-  const HotelItem({
+class AttractionItem extends StatelessWidget {
+  const AttractionItem({
     super.key,
     required this.cubit,
     required this.index,
@@ -19,7 +19,8 @@ class HotelItem extends StatelessWidget {
       padding: const EdgeInsets.only(right: 16.0),
       child: InkWell(
         onTap: () {
-          context.pushNamed('hotel_details/:id',pathParameters: {'id': cubit.searchHotelsModel!.hotels![index].id.toString()});
+          context.pushNamed('tourist_dis_details/:id',pathParameters: {'id': cubit.searchTouristDisModel!.attractionActivities![index].id.toString()});
+          print(cubit.searchTouristDisModel!.attractionActivities![0].description);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -38,7 +39,7 @@ class HotelItem extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 1080 / 780,
                   child: Image.network(
-                    'http://127.0.0.1:8000${cubit.searchHotelsModel!.hotels![index].images![0]}',
+                    'http://127.0.0.1:8000${cubit.searchTouristDisModel!.attractionActivities![index].images![0]}',
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -49,7 +50,7 @@ class HotelItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 4.0),
                 child: Text(
-                  cubit.searchHotelsModel!.hotels![index].hotelName!,
+                  cubit.searchTouristDisModel!.attractionActivities![index].attractionActivityName!,
                   style: AppTextStyles.styleSemiBold16(),
                 ),
               ),
@@ -69,29 +70,13 @@ class HotelItem extends StatelessWidget {
                   ),
                   Flexible(
                     child: Text(
-                      '${cubit.searchHotelsModel!.hotels![index].nationName} / ${cubit.searchHotelsModel!.hotels![index].cityName} / ${cubit.searchHotelsModel!.hotels![index].address}',
+                      '${cubit.searchTouristDisModel!.attractionActivities![index].nationName} / ${cubit.searchTouristDisModel!.attractionActivities![index].cityName} / ${cubit.searchTouristDisModel!.attractionActivities![index].address}',
                       style: AppTextStyles.styleRegular12().copyWith(
                         fontWeight: FontWeight.w800,
                         color: Colors.grey[400],
                       ),
                     ),
                   ),
-                ],
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 6,
-                  ),
-                  for (int i = 0;
-                  i < cubit.searchHotelsModel!.hotels![index].hotelClass!;
-                  i++)
-                    const Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                      size: 20,
-                    )
                 ],
               ),
               const Expanded(

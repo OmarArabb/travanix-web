@@ -45,10 +45,9 @@ class ApiService {
   }
 
   static Future<Map<String, dynamic>> delete(
-      {required endPoint, required String headers}) async {
+      {required endPoint,}) async {
     _dio.options.headers = {
       'Authorization': authorization,
-      's': headers,
     };
     var response = await _dio.delete(
       '$_baseUrl$endPoint',

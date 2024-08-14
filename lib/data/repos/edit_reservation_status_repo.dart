@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:travanix/core/failures.dart';
 import 'package:travanix/core/functions/api_services.dart';
-import 'package:travanix/data/models/trip_reservations_model/trip_reservations_model.dart';
 
 class EditReservationStatusRepo{
   Future<Either<Failure, String>> editTripReservation(Map<String,dynamic> data) async {
