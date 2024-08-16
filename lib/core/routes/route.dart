@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travanix/core/routes/error_routing_page.dart';
+import 'package:travanix/data/models/trip_model/TripModel.dart';
 import 'package:travanix/presentation/views/create_items/create_hotel.dart';
 import 'package:travanix/presentation/views/create_items/create_restaurant.dart';
 import 'package:travanix/presentation/views/create_items/create_tourist_dis.dart';
@@ -9,6 +10,7 @@ import 'package:travanix/presentation/views/home/home.dart';
 import 'package:travanix/presentation/views/home_layout/home_layout.dart';
 import 'package:travanix/presentation/views/item_details/restaurant_details.dart';
 import 'package:travanix/presentation/views/item_details/tourist_dis_details.dart';
+import 'package:travanix/presentation/views/item_details/trip_details.dart';
 import 'package:travanix/presentation/views/login/login.dart';
 import 'package:travanix/presentation/views/reservations/reservations.dart';
 import 'package:travanix/presentation/views/search_items/search_hotels.dart';
@@ -16,6 +18,7 @@ import 'package:travanix/presentation/views/search_items/search_plans.dart';
 import 'package:travanix/presentation/views/search_items/search_restaurants.dart';
 import 'package:travanix/presentation/views/search_items/search_tourist_dis.dart';
 import 'package:travanix/presentation/views/item_details/hotel_details.dart';
+import 'package:travanix/presentation/views/update_item/update_trip.dart';
 import 'package:travanix/presentation/views/wallet_recharge/wallet_recharge.dart';
 
 abstract class AppRouter {
@@ -79,7 +82,7 @@ abstract class AppRouter {
                     name: homeRouteName,
                     path: routesOfHomeLayoutBranches[0],
                     pageBuilder: (context, state) {
-                      return const MaterialPage(child: HomeScreen());
+                      return MaterialPage(child: HomeScreen());
                     }),
               ]),
               StatefulShellBranch(routes: [
@@ -144,7 +147,23 @@ abstract class AppRouter {
                     path: routesOfHomeLayoutBranches[7],
                     pageBuilder: (context, state) {
                       return const MaterialPage(
-                        child: GetPlans(),
+                        child: SearchTrip(),
+                      );
+                    }),
+                GoRoute(
+                    name: 'trip_details/:id',
+                    path: 'trip_details/:id',
+                    pageBuilder: (context, state) {
+                      return MaterialPage(
+                        child: TripDetails(tripId: int.parse(state.pathParameters['id']!),),
+                      );
+                    }),
+                GoRoute(
+                    name: 'trip_update',
+                    path: 'trip_update',
+                    pageBuilder: (context, state) {
+                      return MaterialPage(
+                        child: UpdateTrip(tripModel: state.extra as TripModel,),
                       );
                     }),
               ]),

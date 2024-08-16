@@ -5,6 +5,7 @@ import 'package:travanix/core/functions/api_services.dart';
 import 'package:travanix/data/models/attractions_model/attractions_model.dart';
 import 'package:travanix/data/models/hotels_model/hotel_model.dart';
 import 'package:travanix/data/models/restaurants_model/restaurants_model.dart';
+import 'package:travanix/data/models/trip_model/TripModel.dart';
 
 class GetItemByIdRepo {
   Future<Either<Failure, HotelModel>> getHotelsById({required int id}) async {
@@ -79,28 +80,28 @@ class GetItemByIdRepo {
     }
   }
 
-  // Future<Either<Failure, AttractionsModel>> getTripById({required int id}) async {
-  //   try {
-  //     AttractionsModel? model;
-  //     var data = await ApiService.get(
-  //       endPoint: 'adminGetTripById/$id',
-  //     );
-  //
-  //     model = AttractionsModel.fromJson(data);
-  //     return Right(model);
-  //   } catch (e) {
-  //     if (e is DioException) {
-  //       return left(
-  //         ServerFailure.fromDioError(e),
-  //       );
-  //     }
-  //
-  //     return left(
-  //       ServerFailure(
-  //         e.toString(),
-  //       ),
-  //     );
-  //   }
-  // }
+  Future<Either<Failure, TripModel>> getTripById({required int id}) async {
+    try {
+      TripModel? model;
+      var data = await ApiService.get(
+        endPoint: 'adminGetTripById/$id',
+      );
+
+      model = TripModel.fromJson(data);
+      return Right(model);
+    } catch (e) {
+      if (e is DioException) {
+        return left(
+          ServerFailure.fromDioError(e),
+        );
+      }
+
+      return left(
+        ServerFailure(
+          e.toString(),
+        ),
+      );
+    }
+  }
 
 }

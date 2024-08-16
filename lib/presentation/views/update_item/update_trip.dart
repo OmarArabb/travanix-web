@@ -8,35 +8,37 @@ import 'package:travanix/core/styles/colors.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/core/widgets/custom_material_button.dart';
 import 'package:travanix/core/widgets/custom_text_form_field.dart';
-import 'package:travanix/presentation/manger/create_items_cubit/cubit.dart';
-import 'package:travanix/presentation/manger/create_items_cubit/states.dart';
+import 'package:travanix/data/models/trip_model/TripModel.dart';
 import 'package:travanix/presentation/manger/get_items/cubit.dart';
 import 'package:travanix/presentation/manger/get_items/states.dart';
-import 'package:travanix/presentation/views/create_items/widgets/information_section.dart';
-import 'package:travanix/presentation/views/create_items/widgets/location_section.dart';
-import 'package:travanix/presentation/views/create_items/widgets/select_trip_item_section.dart';
+import 'package:travanix/presentation/manger/update_item/cubit.dart';
+import 'package:travanix/presentation/manger/update_item/states.dart';
+import 'package:travanix/presentation/views/update_item/widgets/inforamtion_section.dart';
+import 'package:travanix/presentation/views/update_item/widgets/location_section.dart';
+import 'package:travanix/presentation/views/update_item/widgets/update_select_trip_item.dart';
 
+class UpdateTrip extends StatelessWidget {
+  const UpdateTrip({super.key, required this.tripModel});
 
-class CreateTrip extends StatelessWidget {
-  const CreateTrip({super.key});
+  final TripModel tripModel;
 
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> formKey = GlobalKey();
 
-    return BlocProvider(
-      create: (context) => CreateItemsCubit(),
-      child: BlocConsumer<CreateItemsCubit, CreateItemsStates>(
+    return BlocProvider<UpdateItemCubit>(
+      create: (context) => UpdateItemCubit(model: tripModel),
+      child: BlocConsumer<UpdateItemCubit, UpdateItemStates>(
         listener: (context, state) {
-          if(state is ErrorCreateTripState) {
-            errorToast(state.errorMessage);
-          }else if(state is SuccessCreateTripState){
+          if(state is ErrorUpdateTripState) {
+            errorToast(state.errMessage);
+          }else if(state is SuccessUpdateTripState){
             successToast(state.successMessage);
           }
 
         },
         builder: (context, state) {
-          CreateItemsCubit createItemsCubit = CreateItemsCubit.get(context);
+          UpdateItemCubit updateItemCubit = UpdateItemCubit.get(context);
 
           List<Widget> additional = [
             Padding(
@@ -50,7 +52,7 @@ class CreateTrip extends StatelessWidget {
                 enabledBorder: buildInputBorder(),
                 focusedBorder: buildInputBorder(),
                 filledColor: Colors.grey[200],
-                controller: createItemsCubit.numberOfSeatController,
+                controller: updateItemCubit.numberOfSeatController,
               ),
             ),
             Padding(
@@ -64,7 +66,7 @@ class CreateTrip extends StatelessWidget {
                 enabledBorder: buildInputBorder(),
                 focusedBorder: buildInputBorder(),
                 filledColor: Colors.grey[200],
-                controller: createItemsCubit.priceController,
+                controller: updateItemCubit.priceController,
               ),
             ),
             Padding(
@@ -75,19 +77,19 @@ class CreateTrip extends StatelessWidget {
                 enabledBorder: buildInputBorder(),
                 focusedBorder: buildInputBorder(),
                 filledColor: Colors.grey[200],
-                controller: createItemsCubit.openingTimeController,
+                controller: updateItemCubit.openingTimeController,
                 onTap: () async {
                   await showOmniDateTimeRangePicker(
                     context: context,
                     startInitialDate: DateTime.now(),
                     startFirstDate:
-                        DateTime(1600).subtract(const Duration(days: 3652)),
+                    DateTime(1600).subtract(const Duration(days: 3652)),
                     startLastDate: DateTime.now().add(
                       const Duration(days: 3652),
                     ),
                     endInitialDate: DateTime.now().add(const Duration(days: 1)),
                     endFirstDate:
-                        DateTime(1600).subtract(const Duration(days: 3652)),
+                    DateTime(1600).subtract(const Duration(days: 3652)),
                     endLastDate: DateTime.now().add(
                       const Duration(days: 3652),
                     ),
@@ -113,12 +115,12 @@ class CreateTrip extends StatelessWidget {
                     transitionDuration: const Duration(milliseconds: 200),
                     barrierDismissible: true,
                   ).then(
-                    (value) {
+                        (value) {
                       if (value != null) {
-                        createItemsCubit.openingTimeController.text = value[0]
+                        updateItemCubit.openingTimeController.text = value[0]
                             .toString()
                             .substring(0, value[0].toString().length - 4);
-                        createItemsCubit.closingTimeController.text = value[1]
+                        updateItemCubit.closingTimeController.text = value[1]
                             .toString()
                             .substring(0, value[1].toString().length - 4);
                       }
@@ -135,7 +137,7 @@ class CreateTrip extends StatelessWidget {
                 enabledBorder: buildInputBorder(),
                 focusedBorder: buildInputBorder(),
                 filledColor: Colors.grey[200],
-                controller: createItemsCubit.closingTimeController,
+                controller: updateItemCubit.closingTimeController,
               ),
             ),
           ];
@@ -146,7 +148,7 @@ class CreateTrip extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'New Trip',
+                  'Update Trip',
                   style: AppTextStyles.styleSemiBold24(),
                 ),
                 const SizedBox(
@@ -171,34 +173,32 @@ class CreateTrip extends StatelessWidget {
                           const SizedBox(
                             height: 32,
                           ),
-                          if(state is !LoadingCreateTripState)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: CustomMaterialButton(
-                              child: const Text(
-                                'Create',
-                                style: TextStyle(color: whiteColor),
+                          if(state is !LoadingUpdateTripState)
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: CustomMaterialButton(
+                                child: const Text(
+                                  'Update',
+                                  style: TextStyle(color: whiteColor),
+                                ),
+                                onPressed: () {
+                                  if (!formKey.currentState!.validate() ||
+                                      updateItemCubit.selectedHotels.isEmpty ||
+                                      updateItemCubit
+                                          .selectedRestaurants.isEmpty ||
+                                      updateItemCubit
+                                          .selectedAttractions.isEmpty) {
+                                    errorToast('Please Fill Empty Fields');
+                                  }
+                                  else if(formKey.currentState!.validate()){
+                                    updateItemCubit.updateTrip();
+                                  }
+                                },
                               ),
-                              onPressed: () {
-                                if (!formKey.currentState!.validate() ||
-                                    createItemsCubit.selectedHotels.isEmpty ||
-                                    createItemsCubit
-                                        .selectedRestaurants.isEmpty ||
-                                    createItemsCubit
-                                        .selectedAttractions.isEmpty) {
-                                  errorToast('Please Fill Empty Fields');
-                                }
-                                else if(formKey.currentState!.validate()){
-                                  createItemsCubit.createTrip().then((value) {
-                                    createItemsCubit.reInitialize();
-                                  },);
-                                }
-                              },
                             ),
-                          ),
 
-                          if(state is LoadingCreateTripState)
-                            const CircularProgressIndicator()
+                          if(state is LoadingUpdateTripState)
+                            const CircularProgressIndicator(),
                         ],
                       ),
                     ),
@@ -216,10 +216,10 @@ class CreateTrip extends StatelessWidget {
                           listener: (context, state) {},
                           builder: (context, state) {
                             GetItemsCubit getItemsCubit =
-                                GetItemsCubit.get(context);
+                            GetItemsCubit.get(context);
                             return SelectTripItemSection(
                               getItemsCubit: getItemsCubit,
-                              createItemsCubit: createItemsCubit,
+                              updateItemCubit: updateItemCubit,
                             );
                           },
                         ),

@@ -17,8 +17,6 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
 
   final CreateItemRepo _createItemRepo = CreateItemRepo();
 
-  CountryModel? countryModel;
-
   CitiesModel? citiesModel;
 
   ServicesModel? servicesModel;
@@ -59,6 +57,8 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
     closingTimeController.clear();
     coordinateXController.clear();
     coordinateYController.clear();
+    priceController.clear();
+    numberOfSeatController.clear();
     foodType = null;
     rate = 0;
     countryId = 0;
@@ -159,7 +159,7 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
       "opining_time" : openingTimeController.text,
       "phone_number" : phoneNumberController.text,
       "descreption" : aboutController.text,
-      "resturant_class" : Random().nextInt(5),
+      "resturant_class" : rate,
       "images": decodedImages
     });
 
@@ -200,7 +200,7 @@ class CreateItemsCubit extends Cubit<CreateItemsStates> {
     var result = await _createItemRepo.createTrip(data: {
       "trip_name" : nameController.text,
       "description" : aboutController.text,
-      "type_of_trip" :"HASSAN",
+      "type_of_trip" :"Family",
       "price_trip" :int.parse(priceController.text),
       "number_of_allSeat" :int.parse(numberOfSeatController.text),
       "trip_start_time" : openingTimeController.text,

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:travanix/presentation/manger/create_items_cubit/cubit.dart';
 import 'package:travanix/presentation/manger/get_items/cubit.dart';
-import 'package:travanix/presentation/views/create_items/widgets/grid_item.dart';
+import 'package:travanix/presentation/manger/update_item/cubit.dart';
+import 'package:travanix/presentation/views/update_item/widgets/update_grid_item.dart';
 
-class GridTripItems extends StatelessWidget {
-  const GridTripItems({
+class UpdateGridTrip extends StatelessWidget {
+  const UpdateGridTrip({
     super.key,
     required this.getItemsCubit,
-    required this.createItemsCubit, required this.type,
+    required this.updateCubit, required this.type,
   });
 
   final GetItemsCubit getItemsCubit;
-  final CreateItemsCubit createItemsCubit;
+  final UpdateItemCubit updateCubit;
   final String type;
 
   @override
@@ -26,9 +26,9 @@ class GridTripItems extends StatelessWidget {
             childAspectRatio: 1 / 1.1),
         itemBuilder: (context, index) {
           return GridItem(
-            createItemsCubit: createItemsCubit,
+            updateItemsCubit: updateCubit,
             index: index,
-            selectedItems: createItemsCubit.selectedHotels,
+            selectedItems: updateCubit.selectedHotels,
             model: getItemsCubit.hotelsModel!,
           );
         },
@@ -43,9 +43,9 @@ class GridTripItems extends StatelessWidget {
             childAspectRatio: 1 / 1.05),
         itemBuilder: (context, index) {
           return GridItem(
-            createItemsCubit: createItemsCubit,
+            updateItemsCubit: updateCubit,
             index: index,
-            selectedItems: createItemsCubit.selectedRestaurants,
+            selectedItems: updateCubit.selectedRestaurants,
             model: getItemsCubit.restaurantsModel!,
           );
         },
@@ -60,9 +60,9 @@ class GridTripItems extends StatelessWidget {
             childAspectRatio: 1 / 1.05),
         itemBuilder: (context, index) {
           return GridItem(
-            createItemsCubit: createItemsCubit,
+            updateItemsCubit: updateCubit,
             index: index,
-            selectedItems: createItemsCubit.selectedAttractions,
+            selectedItems: updateCubit.selectedAttractions,
             model: getItemsCubit.attractionsModel!,
           );
         },

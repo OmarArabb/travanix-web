@@ -36,7 +36,8 @@ class CreateRestaurant extends StatelessWidget {
         },
         builder: (context, state) {
           CreateItemsCubit cubit = CreateItemsCubit.get(context);
-          List<String> foodTypes = ['Syrian', 'Chinese', 'Japanese'];
+          List<String> foodTypes = ['Syrian', 'Chinese', 'Japanese','Popular Food','Egyptian'];
+          int? resClassValue;
 
           List<Widget> additional = [
             Padding(
@@ -65,6 +66,37 @@ class CreateRestaurant extends StatelessWidget {
                     return DropdownMenuItem(
                       value: e,
                       child: Text(e),
+                    );
+                  }).toList()),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 6.0, top: 6),
+              child: CustomDropDownTextField(
+                  filledColor: Colors.grey[200]!,
+                  hint: 'Restaurant Class',
+                  value: resClassValue,
+                  onChanged: (value) {
+                    cubit.rate = value;
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please fill this field';
+                    }
+                    return null;
+                  },
+                  items: [1, 2, 3, 4, 5].map((e) {
+                    List<Widget> list = [];
+                    for (var i = 0; i < e; i++) {
+                      list.add(const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ));
+                    }
+                    return DropdownMenuItem(
+                      value: e,
+                      child: Row(
+                        children: list,
+                      ),
                     );
                   }).toList()),
             ),

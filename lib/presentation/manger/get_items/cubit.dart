@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travanix/data/models/attractions_model/attractions_model.dart';
 import 'package:travanix/data/models/hotels_model/hotel_model.dart';
 import 'package:travanix/data/models/restaurants_model/restaurants_model.dart';
+import 'package:travanix/data/models/trip_model/TripModel.dart';
 import 'package:travanix/data/repos/get_item_by_id_repo.dart';
 import 'package:travanix/data/repos/get_items_repo.dart';
 import 'package:travanix/presentation/manger/get_items/states.dart';
@@ -18,6 +19,7 @@ class GetItemsCubit extends Cubit<GetItemStates> {
   HotelModel? hotelsModel;
   RestaurantsModel? restaurantsModel;
   AttractionsModel? attractionsModel;
+  TripModel? tripModel;
 
   int currIndex = -1 ;
 
@@ -109,6 +111,22 @@ class GetItemsCubit extends Cubit<GetItemStates> {
       // print(attractionsModel.data![0].description);
       this.attractionsModel = attractionsModel;
       emit(GetAttractionsSuccessState());
+    });
+
+  }
+
+  Future<void> getTripById({required int id}) async{
+
+    emit(GetTripLoadingState());
+    var result = await _getItemByIdRepo.getTripById(id: id);
+
+    result.fold((error){
+      print(error.errMessage);
+      emit(GetTripErrorState(errMessage: error.errMessage));
+    }, (tripModel){
+      // print(attractionsModel.data![0].description);
+      this.tripModel = tripModel;
+      emit(GetTripSuccessState());
     });
 
   }

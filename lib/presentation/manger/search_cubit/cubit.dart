@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travanix/data/models/search_hotels_model/search_hotels_model.dart';
 import 'package:travanix/data/models/search_restaurants_model/search_restaurants_model.dart';
 import 'package:travanix/data/models/search_tourist_dis_model/search_tourist_dis_model.dart';
+import 'package:travanix/data/models/search_trips_model/search_trip_model.dart';
 import 'package:travanix/data/repos/search_repo.dart';
 import 'package:travanix/presentation/manger/search_cubit/states.dart';
 
@@ -17,7 +18,7 @@ class SearchCubit extends Cubit<SearchStates>{
   SearchHotelsModel? searchHotelsModel;
   SearchRestaurantsModel? searchRestaurantsModel;
   SearchTouristDisModel? searchTouristDisModel;
-
+  TripsModel? tripsModel;
 
   TextEditingController hotelSearchController = TextEditingController();
   TextEditingController restaurantSearchController = TextEditingController();
@@ -76,5 +77,25 @@ class SearchCubit extends Cubit<SearchStates>{
     });
 
   }
+
+  Future<void> searchPlans() async{
+
+    emit(LoadingSearchState());
+    var result = await _searchRepo.searchTrip(
+        parameters: {
+          'name' : restaurantSearchController.text
+        }
+    );
+
+    result.fold((error){
+      emit(ErrorSearchState(errMessage: error.errMessage));
+    }, (tripModel){
+      this.tripsModel = tripModel;
+      emit(SuccessSearchState());
+    });
+
+  }
+
+
 
 }

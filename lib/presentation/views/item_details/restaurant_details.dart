@@ -62,7 +62,7 @@ class RestaurantDetails extends StatelessWidget {
                 ),
                 OpeningAndClosingTime(
                   openingTime: cubit.restaurantsModel!.data![0].opiningTime!,
-                  closingTime: cubit.attractionsModel!.data![0].closingTime!,
+                  closingTime: cubit.restaurantsModel!.data![0].closingTime!,
                 ),
                 const SizedBox(
                   height: 16,

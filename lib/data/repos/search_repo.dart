@@ -5,6 +5,7 @@ import 'package:travanix/core/functions/api_services.dart';
 import 'package:travanix/data/models/search_hotels_model/search_hotels_model.dart';
 import 'package:travanix/data/models/search_restaurants_model/search_restaurants_model.dart';
 import 'package:travanix/data/models/search_tourist_dis_model/search_tourist_dis_model.dart';
+import 'package:travanix/data/models/search_trips_model/search_trip_model.dart';
 
 
 class SearchRepo {
@@ -67,6 +68,31 @@ class SearchRepo {
       );
 
       model = SearchTouristDisModel.fromJson(data);
+      return Right(model);
+    } catch (e) {
+      if (e is DioException) {
+        return left(
+          ServerFailure.fromDioError(e),
+        );
+      }
+
+      return left(
+        ServerFailure(
+          e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<Either<Failure, TripsModel>> searchTrip({Map<String,dynamic>? parameters}) async {
+    try {
+      TripsModel? model;
+      var data = await ApiService.get(
+          endPoint: 'adminSearchTrip',
+          parameters: parameters
+      );
+
+      model = TripsModel.fromJson(data);
       return Right(model);
     } catch (e) {
       if (e is DioException) {

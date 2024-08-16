@@ -38,3 +38,14 @@ class GetAttractionsErrorState extends GetItemStates{
   GetAttractionsErrorState({required this.errMessage});
 
 }
+
+class GetTripLoadingState extends GetItemStates{}
+
+class GetTripSuccessState extends GetItemStates{}
+
+class GetTripErrorState extends GetItemStates{
+  final String errMessage;
+
+  GetTripErrorState({required this.errMessage});
+
+}

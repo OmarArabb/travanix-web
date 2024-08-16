@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travanix/constant.dart';
 import 'package:travanix/core/styles/colors.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/data/models/create_item_model/services_model.dart';
@@ -64,13 +65,13 @@ class _CustomCheckListTileState extends State<CustomCheckListTile> {
   @override
   Widget build(BuildContext context) {
     return CheckboxListTile(
-      secondary: const Icon(Icons.wifi),
+      secondary: Icon(hotelServicesIcons[widget.servicesModel.data![widget.index].service!]),
       onChanged: (value) {
-        widget.selectedItem.add(widget.servicesModel.data![widget.index].id!);
-        widget.selected = value!;
+        value! ?  widget.selectedItem.add(widget.servicesModel.data![widget.index].id!) : widget.selectedItem.remove(widget.servicesModel.data![widget.index].id!);
+        widget.selected = value;
         setState(() {});
       },
-      value: widget.selectedItem.contains(widget.servicesModel.data![widget.index].id!) ? true : false,
+      value: widget.selectedItem.contains(widget.servicesModel.data![widget.index].id!),
       title: Text(widget.servicesModel.data![widget.index].service!),
     );
   }

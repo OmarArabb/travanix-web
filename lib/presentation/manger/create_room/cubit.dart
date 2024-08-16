@@ -21,7 +21,7 @@ class CreateRoomCubit extends Cubit<CreateRoomStates>{
 
         "capacity_room": int.parse(sizeController.text),
         "price_room": int.parse(priceController.text),
-        "quantity":int.parse(priceController.text),
+        "quantity":int.parse(quantityController.text),
         "hotel_id": hotelId
 
     });
