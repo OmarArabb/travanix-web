@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travanix/core/functions/toast.dart';
 import 'package:travanix/core/styles/text_styles.dart';
+import 'package:travanix/presentation/manger/delete_item_cubit/cubit.dart';
 import 'package:travanix/presentation/manger/get_items/cubit.dart';
 import 'package:travanix/presentation/manger/get_items/states.dart';
 import 'package:travanix/presentation/views/item_details/widgets/comment_section.dart';
@@ -37,15 +38,44 @@ class TripDetails extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    IconButton(onPressed: (){
-                      context.pushNamed('trip_update',extra: cubit.tripModel);
-                    }, icon: const Icon(Icons.edit)),
+                    PopupMenuButton(
+                      child: const Icon(Icons.menu),
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                              onTap: () {
+                                context.pushNamed('trip_update',
+                                    extra: cubit.tripModel);
+                              },
+                              child: const Row(
+                                children: [
+                                  Icon(Icons.edit),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text('Edit Trip'),
+                                ],
+                              )),
+                          PopupMenuItem(
+                              onTap: () {
+
+                              },
+                              child: const Row(
+                                children: [
+                                  Icon(Icons.delete),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text('Delete Trip'),
+                                ],
+                              )),
+                        ];
+                      },
+                    ),
                     const SizedBox(
                       width: 12,
                     ),
-                    Text(
-                        cubit
-                            .tripModel!.data!.tripName!,
+                    Text(cubit.tripModel!.data!.tripName!,
                         style: AppTextStyles.styleSemiBold24()),
                   ],
                 ),
@@ -71,15 +101,21 @@ class TripDetails extends StatelessWidget {
                         children: [
                           const Text('Starting Location : '),
                           LocationSection(
-                            location:'${cubit.tripModel!.data!.nationName} / ${cubit.tripModel!.data!.cityName} / ${cubit.tripModel!.data!.address}',
+                            location:
+                                '${cubit.tripModel!.data!.nationName} / ${cubit.tripModel!.data!.cityName} / ${cubit.tripModel!.data!.address}',
                           ),
                         ],
                       ),
-                      Text('Starting Time : ${cubit.tripModel!.data!.tripStartTime}'),
-                      Text('Ending Time : ${cubit.tripModel!.data!.tripEndTime}'),
-                      Text('Number Of Seats : ${cubit.tripModel!.data!.numberOfAllSeat}'),
-                      Text('Number Of Available Seats : ${cubit.tripModel!.data!.numberOfSeatsAvailable}'),
-                      Text('Price Per Seat : ${cubit.tripModel!.data!.priceTrip}'),
+                      Text(
+                          'Starting Time : ${cubit.tripModel!.data!.tripStartTime}'),
+                      Text(
+                          'Ending Time : ${cubit.tripModel!.data!.tripEndTime}'),
+                      Text(
+                          'Number Of Seats : ${cubit.tripModel!.data!.numberOfAllSeat}'),
+                      Text(
+                          'Number Of Available Seats : ${cubit.tripModel!.data!.numberOfSeatsAvailable}'),
+                      Text(
+                          'Price Per Seat : ${cubit.tripModel!.data!.priceTrip}'),
                     ],
                   ),
                 ),
@@ -94,8 +130,7 @@ class TripDetails extends StatelessWidget {
                   height: 8,
                 ),
                 CommentsSection(
-                  endPoint:
-                  'trip_id=${cubit.tripModel!.data!.id!}',
+                  endPoint: 'trip_id=${cubit.tripModel!.data!.id!}',
                 ),
                 const SizedBox(
                   height: 16,
@@ -112,4 +147,3 @@ class TripDetails extends StatelessWidget {
     );
   }
 }
-

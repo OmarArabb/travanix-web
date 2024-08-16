@@ -37,7 +37,7 @@ class SearchTrip extends StatelessWidget {
                       controller: cubit.restaurantSearchController,
                       hintText: 'Search',
                       onChanged: (String value) {
-                        cubit.searchRestaurants();
+                        cubit.searchPlans();
                       },
                     ),
                   ),

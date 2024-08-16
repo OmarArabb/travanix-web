@@ -30,9 +30,18 @@ class WalletRecharge extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                'Wallet Recharge Requests',
-                style: AppTextStyles.styleSemiBold24(),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        RechargeWalletCubit.get(context).getRequestToRecharge();
+                      },
+                      icon: const Icon(Icons.refresh)),
+                  Text(
+                    'Wallet Recharge Requests',
+                    style: AppTextStyles.styleSemiBold24(),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 24,

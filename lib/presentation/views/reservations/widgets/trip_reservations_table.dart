@@ -19,16 +19,16 @@ class TripReservationsDataTable extends StatelessWidget {
     return DataTable(
       dividerThickness: 2,
       headingTextStyle: const TextStyle(color: basicColor),
-      columnSpacing: 70,
       dataRowMaxHeight: 60,
+      headingRowHeight: 60,
       columns: const [
-        DataColumn(label: Text('Trip Name')),
-        DataColumn(label: Text('Trip Price')),
-        DataColumn(label: Text('Reservation seats')),
-        DataColumn(label: Text('Available Seats')),
-        DataColumn(label: Text('User Name')),
-        DataColumn(label: Text('User Phone')),
-        DataColumn(label: Text('Reservations Status')),
+        DataColumn(label: Flexible(child: Text('Trip Name'))),
+        DataColumn(label: Flexible(child: Text('Trip Price'))),
+        DataColumn(label: Flexible(child: Text('Reservation seats'))),
+        DataColumn(label: Flexible(child: Text('Available Seats'))),
+        DataColumn(label: Flexible(child: Text('User Name'))),
+        DataColumn(label: Flexible(child: Text('User Phone'))),
+        DataColumn(label: Flexible(child: Text('Reservations Status'))),
       ],
       rows: cubit.tripReservations.map(
         (data) {

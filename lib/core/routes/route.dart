@@ -56,7 +56,7 @@ abstract class AppRouter {
   ];
 
   static final GoRouter router = GoRouter(
-    initialLocation: '/$homeRouteName',
+    initialLocation: loginRoute,
     routes: [
       GoRoute(
         name: loginRouteName,
