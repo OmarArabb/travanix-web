@@ -85,6 +85,7 @@ class CreateTrip extends StatelessWidget {
                     startLastDate: DateTime.now().add(
                       const Duration(days: 3652),
                     ),
+
                     endInitialDate: DateTime.now().add(const Duration(days: 1)),
                     endFirstDate:
                         DateTime(1600).subtract(const Duration(days: 3652)),
@@ -97,7 +98,8 @@ class CreateTrip extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(16)),
                     constraints: const BoxConstraints(
                       maxWidth: 350,
-                      maxHeight: 650,
+                      maxHeight: 1100,
+                      minHeight: 1000
                     ),
                     transitionBuilder: (context, anim1, anim2, child) {
                       return FadeTransition(

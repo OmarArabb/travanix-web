@@ -32,29 +32,6 @@ class CommentRateRepo{
     }
   }
 
-  // Future<Either<Failure,CommentModel>> getRestaurantComment({required restaurantId})async {
-  //   try {
-  //     CommentModel model;
-  //     var data =
-  //     await ApiService.get(endPoint: 'adminGetAllRateAndComment?restaurant_id=$restaurantId', );
-  //
-  //     model = CommentModel.fromJson(data);
-  //     return Right(model);
-  //   } catch (e) {
-  //     if (e is DioException) {
-  //       return left(
-  //         ServerFailure.fromDioError(e),
-  //       );
-  //     }
-  //
-  //     return left(
-  //       ServerFailure(
-  //         e.toString(),
-  //       ),
-  //     );
-  //   }
-  // }
-
   Future<Either<Failure,String>> deleteComment({required commentId})async {
     try {
       var data =

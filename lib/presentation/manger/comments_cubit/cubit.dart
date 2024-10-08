@@ -19,7 +19,8 @@ class GetCommentsCubit extends Cubit<GetCommentsStates>{
     var result = await _commentRateRepo.getReviews(endPoint: endPoint);
 
     result.fold((error) {
-      emit(ErrorGetComments(errMessage: error.errMessage));
+      print(error.errMessage);
+        emit(ErrorGetComments(errMessage: error.errMessage));
     }, (model) {
       this.model = model;
       emit(SuccessGetComments());
@@ -27,25 +28,14 @@ class GetCommentsCubit extends Cubit<GetCommentsStates>{
 
   }
 
-  // void getRestaurantComments({required restaurantId})async{
-  //   emit(LoadingGetComments());
-  //   var result = await _commentRateRepo.getRestaurantComment(restaurantId: restaurantId);
-  //
-  //   result.fold((error) {
-  //     emit(ErrorGetComments(errMessage: error.errMessage));
-  //   }, (model) {
-  //     this.model = model;
-  //     emit(SuccessGetComments());
-  //   },);
-  //
-  // }
 
   void deleteComment({required int commentId})async{
     emit(LoadingDeleteComments());
     var result = await _commentRateRepo.deleteComment(commentId: commentId);
 
     result.fold((error) {
-      emit(ErrorDeleteComments(errMessage: error.errMessage));
+      print(error.errMessage);
+        emit(ErrorDeleteComments(errMessage: error.errMessage));
     }, (success) {
       model!.data!.removeWhere((element) =>element.commentId == commentId,);
       emit(SuccessDeleteComments(successMessage: success));
