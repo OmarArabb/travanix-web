@@ -5,7 +5,6 @@ import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/core/widgets/custom_text_form_field.dart';
 import 'package:travanix/presentation/manger/search_cubit/cubit.dart';
 import 'package:travanix/presentation/manger/search_cubit/states.dart';
-import 'package:travanix/presentation/views/search_items/widgets/restaurant_item.dart';
 import 'package:travanix/presentation/views/search_items/widgets/trip_item.dart';
 
 class SearchTrip extends StatelessWidget {

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travanix/core/functions/toast.dart';
 import 'package:travanix/core/styles/text_styles.dart';
-import 'package:travanix/presentation/manger/delete_item_cubit/cubit.dart';
 import 'package:travanix/presentation/manger/get_items/cubit.dart';
 import 'package:travanix/presentation/manger/get_items/states.dart';
 import 'package:travanix/presentation/views/item_details/widgets/comment_section.dart';

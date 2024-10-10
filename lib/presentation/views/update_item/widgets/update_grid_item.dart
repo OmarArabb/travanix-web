@@ -3,7 +3,6 @@ import 'package:travanix/core/styles/colors.dart';
 import 'package:travanix/core/styles/text_styles.dart';
 import 'package:travanix/data/models/hotels_model/hotel_model.dart';
 import 'package:travanix/data/models/restaurants_model/restaurants_model.dart';
-import 'package:travanix/presentation/manger/create_items_cubit/cubit.dart';
 import 'package:travanix/presentation/manger/update_item/cubit.dart';
 
 class GridItem extends StatefulWidget {

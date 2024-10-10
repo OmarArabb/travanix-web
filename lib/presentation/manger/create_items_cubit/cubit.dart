@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travanix/data/models/create_item_model/cities_model.dart';
-import 'package:travanix/data/models/create_item_model/country_model.dart';
 import 'package:travanix/data/models/create_item_model/services_model.dart';
 import 'package:travanix/data/repos/create_item_repo.dart';
 import 'package:travanix/presentation/manger/create_items_cubit/states.dart';
